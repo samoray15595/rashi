@@ -1,4 +1,3 @@
-
 export enum Category {
   PHARMACY = 'صيدليات',
   RESTAURANT = 'مطاعم',
@@ -10,7 +9,12 @@ export enum Category {
   SHOE_STORE = 'محلات أحذية',
   WATER_STATION = 'محطات مياه',
   POULTRY = 'فراريج',
-  ICE_CREAM = 'مثلجات'
+  ICE_CREAM = 'مثلجات',
+  INTERNET = 'إنترنت',
+  LAUNDRY = 'مغاسل',
+  CARPENTER = 'نجار',
+  ALUMINUM = 'ألمنيوم',
+  HOSPITALS = 'مستشفيات صور'
 }
 
 export interface Business {
@@ -19,6 +23,7 @@ export interface Business {
   category: Category;
   phone: string;
   whatsapp?: string;
+  tiktok?: string;
   address: string;
   mapUrl?: string;
   isOpen: boolean;

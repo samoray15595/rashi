@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { Category, Business, ChatMessage } from './types';
 import { INITIAL_BUSINESSES, CATEGORIES_LIST } from './constants';
-import { getSmartRecommendation } from './services/geminiService';
+import { getSmartRecommendation } from './geminiService';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -49,7 +49,7 @@ const App: React.FC = () => {
   
   const [favorites, setFavorites] = useState<string[]>(() => {
     try {
-      const saved = localStorage.getItem('rashidiya_favs_v5');
+      const saved = localStorage.getItem('rashidiya_favs_v6');
       return saved ? JSON.parse(saved) : [];
     } catch (e) { return []; }
   });
@@ -79,7 +79,7 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem('rashidiya_favs_v5', JSON.stringify(favorites));
+    localStorage.setItem('rashidiya_favs_v6', JSON.stringify(favorites));
   }, [favorites]);
 
   useEffect(() => {
@@ -114,7 +114,6 @@ const App: React.FC = () => {
     setUserInput('');
     setIsTyping(true);
     
-    // استدعاء الخدمة من الملف الخارجي
     const aiResponse = await getSmartRecommendation(msg, INITIAL_BUSINESSES);
     
     setIsTyping(false);

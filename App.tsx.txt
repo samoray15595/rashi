@@ -7,18 +7,18 @@ import {
   Heart,
   Send,
   Share2,
-  CheckCircle2
+  CheckCircle2,
+  Download,
+  Info
 } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 import { Category, Business, ChatMessage } from './types';
 import { INITIAL_BUSINESSES, CATEGORIES_LIST } from './constants';
 
-// تعريف الأنواع لـ process.env
-declare const process: {
-  env: {
-    API_KEY: string;
-  };
-};
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
 
 const WhatsAppIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
@@ -34,6 +34,9 @@ const App: React.FC = () => {
   const [userInput, setUserInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showCopySuccess, setShowCopySuccess] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [showInstallModal, setShowInstallModal] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   
   const [favorites, setFavorites] = useState<string[]>(() => {
@@ -43,26 +46,55 @@ const App: React.FC = () => {
     } catch (e) { return []; }
   });
 
+  // كشف طلب التثبيت
+  useEffect(() => {
+    const isIphone = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    setIsIOS(isIphone);
+
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      // إظهار النافذة المنبثقة بعد 3 ثوانٍ
+      setTimeout(() => setShowInstallModal(true), 3000);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    // لمستخدمي الآيفون: إذا لم يكن التطبيق مثبتاً بالفعل
+    if (isIphone && !(window.navigator as any).standalone) {
+      setTimeout(() => setShowInstallModal(true), 4000);
+    }
+
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('User accepted install');
+      }
+      setDeferredPrompt(null);
+      setShowInstallModal(false);
+    }
+  };
+
   const getSmartRecommendation = async (query: string) => {
     try {
-      // الوصول للمفتاح بشكل متوافق مع vite.config.ts
-      const apiKey = process.env.API_KEY;
-      if (!apiKey) throw new Error("API Key is missing from environment");
-      
-      const ai = new GoogleGenAI({ apiKey });
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const availableData = INITIAL_BUSINESSES.map(b => `${b.name} (${b.category}): ${b.phone}`).join(', ');
-      
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
-        contents: `المستخدم يسأل: "${query}". البيانات المتاحة لدينا: ${availableData}. أجب بالعربية بلهجة مخيم الرشيدية الودودة والمختصرة جداً جداً. ركز على إعطاء الأرقام.`,
+        contents: `المستخدم يسأل: "${query}". البيانات: ${availableData}. أجب بلهجة مخيم الرشيدية الودودة والمختصرة جداً.`,
         config: {
-          systemInstruction: "أنت مساعد ذكي لتطبيق دليل هواتف مخيم الرشيدية. صمم بواسطة ابتسام احمد ديب. ساعد الناس في العثور على أرقام الصيدليات والمطاعم والعيادات والمؤسسات."
+          systemInstruction: "أنت مساعد ذكي لتطبيق دليل الرشيدية. صمم بواسطة ابتسام احمد ديب."
         }
       });
-      return response.text;
+      return response.text || "عذراً، لم أجد إجابة مناسبة.";
     } catch (error) {
       console.error("AI Error:", error);
-      return "عذراً، لم أستطع البحث الآن. يرجى تصفح القائمة يدوياً.";
+      return "عذراً، حدث خطأ في الاتصال بالذكاء الاصطناعي.";
     }
   };
 
@@ -88,12 +120,10 @@ const App: React.FC = () => {
     const baseList = INITIAL_BUSINESSES.filter(biz => {
       const matchesSearch = biz.name.toLowerCase().includes(lowerSearch) || 
                            biz.address.toLowerCase().includes(lowerSearch);
-      
       if (activeCategory === 'الكل') return matchesSearch;
       if (activeCategory === 'المفضلة') return favorites.includes(biz.id) && matchesSearch;
       return biz.category === activeCategory && matchesSearch;
     });
-
     return [...baseList].sort((a, b) => (a.isPinned === b.isPinned ? 0 : a.isPinned ? -1 : 1));
   }, [activeCategory, searchTerm, favorites]);
 
@@ -129,10 +159,10 @@ const App: React.FC = () => {
             </div>
           </div>
           <div className="flex gap-2">
-            <button onClick={copyURL} className="p-2 bg-slate-900 border border-slate-800 rounded-lg text-slate-400 hover:text-white transition-all" aria-label="Share">
+            <button onClick={copyURL} className="p-2 bg-slate-900 border border-slate-800 rounded-lg text-slate-400 hover:text-white transition-all">
               <Share2 className="w-5 h-5" />
             </button>
-            <button onClick={() => setIsChatOpen(true)} className="bg-green-600 p-2 rounded-lg text-white shadow-lg active:scale-95 transition-all" aria-label="AI Chat">
+            <button onClick={() => setIsChatOpen(true)} className="bg-green-600 p-2 rounded-lg text-white shadow-lg active:scale-95 transition-all">
               <WhatsAppIcon className="w-5 h-5" />
             </button>
           </div>
@@ -182,7 +212,7 @@ const App: React.FC = () => {
                     <p className="text-[11px] font-medium">{biz.address}</p>
                   </div>
                 </div>
-                <button onClick={(e) => toggleFavorite(biz.id, e)} className="p-1" aria-label="Toggle Favorite">
+                <button onClick={(e) => toggleFavorite(biz.id, e)} className="p-1">
                   <Heart className={`w-5 h-5 transition-all ${favorites.includes(biz.id) ? 'fill-rose-500 text-rose-500' : 'text-slate-700 hover:text-slate-600'}`} />
                 </button>
               </div>
@@ -198,22 +228,63 @@ const App: React.FC = () => {
             </div>
           ))}
         </div>
-
-        {filteredBusinesses.length === 0 && (
-          <div className="text-center py-20 text-slate-500">
-            <Search className="w-12 h-12 mx-auto mb-4 opacity-20" />
-            <p className="font-bold">لم يتم العثور على نتائج للبحث</p>
-          </div>
-        )}
-
-        <footer className="mt-12 p-8 border-t border-slate-900 text-center">
-          <p className="text-xs text-slate-500 font-bold leading-relaxed max-w-sm mx-auto">
-            دليل خدمات مخيم الرشيدية - فخورون بخدمتكم<br/>
-            صمم بواسطة ابتسام احمد ديب
-          </p>
-        </footer>
       </main>
 
+      {/* نافذة التثبيت التلقائية */}
+      {showInstallModal && (
+        <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-500">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-indigo-600 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg shadow-indigo-600/30">
+                <Download className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-xl font-black text-white mb-2">ثبّت التطبيق الآن</h2>
+              <p className="text-sm text-slate-400 font-bold mb-6 leading-relaxed">
+                للوصول السريع للأرقام والخدمات في مخيم الرشيدية، أضف الدليل إلى شاشتك الرئيسية.
+              </p>
+
+              {isIOS ? (
+                <div className="bg-slate-800/50 p-4 rounded-2xl mb-6 text-right border border-slate-700">
+                  <p className="text-xs text-indigo-400 font-black mb-3 flex items-center gap-2">
+                    <Info className="w-4 h-4" /> لمستخدمي الآيفون:
+                  </p>
+                  <ol className="text-[11px] text-slate-300 space-y-2 list-decimal pr-4 font-bold">
+                    <li>اضغط على زر <span className="text-white">"مشاركة" (Share)</span> أسفل المتصفح.</li>
+                    <li>اختر <span className="text-white">"إضافة إلى الشاشة الرئيسية"</span>.</li>
+                  </ol>
+                </div>
+              ) : null}
+
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => setShowInstallModal(false)}
+                  className="flex-1 bg-slate-800 text-slate-400 py-3.5 rounded-2xl font-black text-sm hover:bg-slate-700 transition-colors"
+                >
+                  إلغاء
+                </button>
+                {!isIOS && (
+                  <button 
+                    onClick={handleInstallClick}
+                    className="flex-1 bg-indigo-600 text-white py-3.5 rounded-2xl font-black text-sm shadow-lg shadow-indigo-600/40 active:scale-95 transition-all"
+                  >
+                    تثبيت الآن
+                  </button>
+                )}
+                {isIOS && (
+                  <button 
+                    onClick={() => setShowInstallModal(false)}
+                    className="flex-1 bg-indigo-600 text-white py-3.5 rounded-2xl font-black text-sm shadow-lg shadow-indigo-600/40 active:scale-95 transition-all"
+                  >
+                    فهمت
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* دردشة الذكاء الاصطناعي */}
       {isChatOpen && (
         <div className="fixed inset-0 z-50 bg-[#020617] flex flex-col sm:max-w-md sm:mr-auto border-r border-slate-800 animate-in slide-in-from-left duration-300 shadow-2xl">
           <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900">
@@ -233,7 +304,7 @@ const App: React.FC = () => {
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-950/50">
             <div className="flex justify-start">
               <div className="max-w-[85%] p-3 rounded-2xl text-sm font-medium bg-slate-800 text-slate-100 border border-slate-700">
-                مرحباً بك في دليل الرشيدية! أنا مساعدك الذكي، اطلب مني أي رقم وسأحاول مساعدتك فوراً.
+                مرحباً بك! اطلب مني أي رقم وسأحاول مساعدتك فوراً.
               </div>
             </div>
             {chatMessages.map((m, i) => (
@@ -266,7 +337,7 @@ const App: React.FC = () => {
               <button 
                 onClick={handleSendMessage} 
                 disabled={!userInput.trim() || isTyping}
-                className="bg-indigo-600 p-3 rounded-xl text-white shadow-lg active:scale-95 transition-all disabled:opacity-50 disabled:scale-100"
+                className="bg-indigo-600 p-3 rounded-xl text-white shadow-lg active:scale-95 transition-all disabled:opacity-50"
               >
                 <Send className="w-5 h-5" />
               </button>

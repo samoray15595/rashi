@@ -18,13 +18,13 @@ export const INITIAL_BUSINESSES: Business[] = [
     category: Category.SHOE_STORE,
     phone: '+96181397138',
     whatsapp: '96181397138',
-    tiktok: 'https://www.tiktok.com/@hoda.deeb?_r=1&_d=f12de6jimd2j7j&sec_uid=MS4wLjABAAAAjRGR8F8oSs1Tz_K8IqMf3ABdbQB2CzhoVOz_PpzDOhWDEBtdtsbCki5455uYTReM&share_author_id=7379176724305740805&sharer_language=en&source=h5_m&u_code=d14g6k1h6419lj&timestamp=1770496500&user_id=6578873771914035202&sec_user_id=MS4wLjABAAAAn4RZWJzsR0hSTajRaK2T5gFSoIurkTZBTNpZhMTCXyWLXnF3S-s0IC4wL4rHyUyn&item_author_type=2&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7584948462413563664&share_link_id=2bcd2fdb-038c-4b94-b743-97e9a9e026c9&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b7200%2Cb5836&social_share_type=5&enable_checksum=1',
+    tiktok: 'https://www.tiktok.com/@hoda.deeb',
     address: 'مخيم الرشيدية - محلات أحذية وتجميل',
     isOpen: true,
     isPinned: true
   },
   
-  // --- مستشفيات صور وصيدا (جديد) ---
+  // --- مستشفيات صور وصيدا (القائمة الكاملة) ---
   { id: 'hosp_balsam', name: 'مستشفى بلسم / مخيم الرشيدية', category: Category.HOSPITALS, phone: '+9613625229', whatsapp: '9613625229', address: 'مخيم الرشيدية (رقم إضافي: 81992156)', isOpen: true, isPinned: true },
   { id: 'hosp_italy', name: 'مستشفى اللبناني الايطالي', category: Category.HOSPITALS, phone: '+9617344423', whatsapp: '9617344423', address: 'صور (رقم إضافي: 07350065)', isOpen: true },
   { id: 'hosp_jabal', name: 'مستشفى جبل عامل', category: Category.HOSPITALS, phone: '+9617740348', whatsapp: '9617740348', address: 'صور (أرقام إضافية: 03280580 - 07740343)', isOpen: true },
@@ -37,42 +37,17 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'hosp_hammoud', name: 'مستشفى حمود / صيدا', category: Category.HOSPITALS, phone: '+9617721021', whatsapp: '9617721021', address: 'صيدا (رقم إضافي: 07723111)', isOpen: true },
   { id: 'hosp_dalaa', name: 'مستشفى دلاعة / صيدا', category: Category.HOSPITALS, phone: '+9617724088', whatsapp: '9617724088', address: 'صيدا', isOpen: true },
   { id: 'hosp_hamshari', name: 'مستشفى الشهيد محمود الهمشري / صيدا', category: Category.HOSPITALS, phone: '+9617724871', whatsapp: '9617724871', address: 'صيدا', isOpen: true },
-  { id: 'hosp_qassab', name: 'مستشفى قصب / عبرا', category: Category.HOSPITALS, phone: '+9617723900', whatsapp: '9617723900', address: 'عبرا (رقم إضافي: 07731541)', isOpen: true },
+  { id: 'hosp_qassab', name: 'مستشفى قصب / عبرا', category: Category.HOSPITALS, phone: '+961723900', whatsapp: '961723900', address: 'عبرا (رقم إضافي: 07731541)', isOpen: true },
   { id: 'hosp_turkish', name: 'المستشفى التركي / صيدا', category: Category.HOSPITALS, phone: '+9617577560', whatsapp: '9617577560', address: 'صيدا (رقم إضافي: 76060537)', isOpen: true },
 
-  // --- نجار (مثبت تحت لين ام الفقير) ---
-  {
-    id: 'carp_jalal',
-    name: 'جلال علي الكي (نجار)',
-    category: Category.CARPENTER,
-    phone: '+96170773154',
-    whatsapp: '96170773154',
-    address: 'مخيم الرشيدية',
-    isOpen: true,
-    isPinned: true
-  },
+  // --- نجار ---
+  { id: 'carp_jalal', name: 'جلال علي الكي (نجار)', category: Category.CARPENTER, phone: '+96170773154', whatsapp: '96170773154', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
 
   // --- ألمنيوم ---
-  {
-    id: 'alum_mahmoud',
-    name: 'محمود العريض (المنيوم)',
-    category: Category.ALUMINUM,
-    phone: '+96178862269',
-    whatsapp: '96178862269',
-    address: 'خط السكة محلات ابو النمل',
-    isOpen: true
-  },
+  { id: 'alum_mahmoud', name: 'محمود العريض (المنيوم)', category: Category.ALUMINUM, phone: '+96178862269', whatsapp: '96178862269', address: 'خط السكة محلات ابو النمل', isOpen: true },
 
   // --- مغاسل ---
-  {
-    id: 'laundry_alsayyed',
-    name: 'مغسل ALSAYYED غسيل سيارات - دراجات ناريه- سجاد',
-    category: Category.LAUNDRY,
-    phone: '+96171773546',
-    whatsapp: '96171773546',
-    address: 'الحي الشمالي - مقابل مسجد العودة',
-    isOpen: true
-  },
+  { id: 'laundry_alsayyed', name: 'مغسل ALSAYYED غسيل سيارات - دراجات ناريه- سجاد', category: Category.LAUNDRY, phone: '+96171773546', whatsapp: '96171773546', address: 'الحي الشمالي - مقابل مسجد العودة', isOpen: true },
 
   // --- إنترنت ---
   { id: 'net_ahmad', name: 'احمد محمد WI-FI NET', category: Category.INTERNET, phone: '+96171565420', whatsapp: '96171565420', address: 'مخيم الرشيدية', isOpen: true },
@@ -92,7 +67,7 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'pou_olayan', name: 'فروج عليان', category: Category.POULTRY, phone: '+96178770479', whatsapp: '96178770479', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'pou_samer_azzam', name: 'لحومات ومتبلات سامر عزام', category: Category.POULTRY, phone: '+96171418071', whatsapp: '96171418071', address: 'مخيم الرشيدية', isOpen: true },
 
-  // --- مثلجات مخيم الرشيدية ---
+  // --- مثلجات ---
   { id: 'ice_special', name: 'مثلجات سبيسيال / محمد فياض', category: Category.ICE_CREAM, phone: '+96181536314', whatsapp: '96181536314', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'ice_nehro', name: 'مثلجات علاء نهرو', category: Category.ICE_CREAM, phone: '+96170744081', whatsapp: '96170744081', address: 'مخيم الرشيدية', isOpen: true },
 
@@ -103,7 +78,7 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'water_family', name: 'مياه العائلة', category: Category.WATER_STATION, phone: '+96176723240', whatsapp: '96176723240', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'water_zamzam', name: 'مياة زمزم', category: Category.WATER_STATION, phone: '+96178791878', whatsapp: '96178791878', address: 'مخيم الرشيدية', isOpen: true },
 
-  // --- ملاحم مخيم الرشيدية ---
+  // --- ملاحم ---
   { id: 'bt_nakha', name: 'ملحمة النكهة', category: Category.BUTCHER, phone: '+96171696868', whatsapp: '96171696868', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'bt_khaled_safouri', name: 'ملحمة خالد الصفوري', category: Category.BUTCHER, phone: '+96170889659', whatsapp: '96170889659', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'bt_mahmoud_safouri', name: 'ملحمة محمود الصفوري', category: Category.BUTCHER, phone: '+9613493328', whatsapp: '9613493328', address: 'مخيم الرشيدية', isOpen: true },
@@ -125,17 +100,8 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'den_hanan', name: 'الدكتورة حنان موسى', category: Category.DENTIST, phone: '+9613497721', whatsapp: '9613497721', address: 'الشارع العام الرئيسي', isOpen: true },
   { id: 'den_ahmad', name: 'الدكتور أحمد ميعاري', category: Category.DENTIST, phone: '+96171678896', whatsapp: '96171678896', address: 'عيادة الأونروا - مخيم الرشيدية', isOpen: true },
 
-  // --- المؤسسات والدفاع المدني ---
-  {
-    id: 'inst_civil_defense',
-    name: 'الدفاع المدني الفلسطيني - وحدة الإسعاف والطوارئ',
-    category: Category.INSTITUTION,
-    phone: '+96171542710',
-    whatsapp: '96171542710',
-    address: 'مخيم الرشيدية',
-    isOpen: true,
-    isPinned: true
-  },
+  // --- المؤسسات ---
+  { id: 'inst_civil_defense', name: 'الدفاع المدني الفلسطيني - وحدة الإسعاف والطوارئ', category: Category.INSTITUTION, phone: '+96171542710', whatsapp: '96171542710', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
   { id: 'inst_abu_jihad', name: 'مؤسسة الشهيد أبو جهاد الوزير (تأهيل ذوي الإعاقة)', category: Category.INSTITUTION, phone: '+9613945375', whatsapp: '9613945375', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_shifa_rashidiya', name: 'جمعية الشفاء - مخيم الرشيدية', category: Category.INSTITUTION, phone: '+9613076165', whatsapp: '9613076165', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_shifa_burj', name: 'جمعية الشفاء الطبية - مخيم برج الشمالي', category: Category.INSTITUTION, phone: '+9617343840', whatsapp: '9617343840', address: 'مخيم برج الشمالي', isOpen: true },
@@ -154,7 +120,7 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'ph_sayyed', name: 'صيدلية الحاج أشرف السيد', category: Category.PHARMACY, phone: '+9613244632', whatsapp: '9613244632', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'ph_balsam_clinics', name: 'العيادات الخارجية / مستشفى بلسم', category: Category.PHARMACY, phone: '+96181992156', whatsapp: '96181992156', address: 'مخيم الرشيدية', isOpen: true },
 
-  // --- المطاعم والحلويات ---
+  // --- المطاعم ---
   { id: 'res_saeed', name: 'مطعم سعيد', category: Category.RESTAURANT, phone: '+96171260348', whatsapp: '96171260348', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'res_balsam', name: 'مطعم بلسم', category: Category.RESTAURANT, phone: '+96170624488', whatsapp: '96170624488', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'res_hisham', name: 'مطعم هشام خواص للفول', category: Category.RESTAURANT, phone: '+96170099351', whatsapp: '96170099351', address: 'مخيم الرشيدية', isOpen: true },

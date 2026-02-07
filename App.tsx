@@ -13,9 +13,9 @@ import {
   Sparkles,
   UserPlus
 } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
 import { Category, Business, ChatMessage } from './types';
 import { INITIAL_BUSINESSES, CATEGORIES_LIST } from './constants';
+import { getSmartRecommendation } from './services/geminiService';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -78,32 +78,6 @@ const App: React.FC = () => {
     }
   };
 
-  const getSmartRecommendation = async (query: string) => {
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const contextData = INITIAL_BUSINESSES.map(b => `- ${b.name} (${b.category}): هاتف ${b.phone}, واتساب ${b.whatsapp || 'غير متوفر'}`).join('\n');
-      
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: `
-          أنت المساعد الذكي الرسمي لـ "دليل مخيم الرشيدية"، صممتك "ابتسام ديب".
-          مهمتك هي مساعدة أهل المخيم في العثور على ما يحتاجونه من قاعدة البيانات هذه:
-          
-          ${contextData}
-          
-          سؤال المستخدم: "${query}"
-          رد مودة وذكاء بلهجة أهل المخيم واذكر الأرقام بوضوح.
-        `,
-        config: {
-          systemInstruction: "أنت مساعد ودود بلهجة فلسطينية من مخيم الرشيدية. وظيفتك العثور على الأرقام واقتراح المحلات للمستخدمين. صممتك ابتسام ديب."
-        }
-      });
-      return response.text || "يا هلا بك، جرب تبحث بالاسم في القائمة الرئيسية هلق!";
-    } catch (error) {
-      return "يا هلا بك يا طيب، صار عندي شوية تشويش. جرب تسألني كمان شوي!";
-    }
-  };
-
   useEffect(() => {
     localStorage.setItem('rashidiya_favs_v5', JSON.stringify(favorites));
   }, [favorites]);
@@ -139,7 +113,10 @@ const App: React.FC = () => {
     setChatMessages(prev => [...prev, { role: 'user', text: msg }]);
     setUserInput('');
     setIsTyping(true);
-    const aiResponse = await getSmartRecommendation(msg);
+    
+    // استدعاء الخدمة من الملف الخارجي
+    const aiResponse = await getSmartRecommendation(msg, INITIAL_BUSINESSES);
+    
     setIsTyping(false);
     setChatMessages(prev => [...prev, { role: 'model', text: aiResponse }]);
   };

@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { 
   Phone, 
@@ -14,8 +13,8 @@ import { GoogleGenAI } from "@google/genai";
 import { Category, Business, ChatMessage } from './types';
 import { INITIAL_BUSINESSES, CATEGORIES_LIST } from './constants';
 
-// تعريف بسيط لـ process لتجنب أخطاء TypeScript في البيئات التي لا تدعمها افتراضياً
-declare var process: {
+// تعريف الأنواع لـ process.env
+declare const process: {
   env: {
     API_KEY: string;
   };
@@ -46,6 +45,7 @@ const App: React.FC = () => {
 
   const getSmartRecommendation = async (query: string) => {
     try {
+      // الوصول للمفتاح بشكل متوافق مع vite.config.ts
       const apiKey = process.env.API_KEY;
       if (!apiKey) throw new Error("API Key is missing from environment");
       
@@ -56,7 +56,7 @@ const App: React.FC = () => {
         model: 'gemini-3-flash-preview',
         contents: `المستخدم يسأل: "${query}". البيانات المتاحة لدينا: ${availableData}. أجب بالعربية بلهجة مخيم الرشيدية الودودة والمختصرة جداً جداً. ركز على إعطاء الأرقام.`,
         config: {
-          systemInstruction: "أنت مساعد ذكي لتطبيق دليل هواتف مخيم الرشيدية. صمم بواسطة ابتسام احمد ديب. ساعد الناس في العثور على أرقام الصيدليات والمطاعم والعيادات."
+          systemInstruction: "أنت مساعد ذكي لتطبيق دليل هواتف مخيم الرشيدية. صمم بواسطة ابتسام احمد ديب. ساعد الناس في العثور على أرقام الصيدليات والمطاعم والعيادات والمؤسسات."
         }
       });
       return response.text;
@@ -129,10 +129,10 @@ const App: React.FC = () => {
             </div>
           </div>
           <div className="flex gap-2">
-            <button onClick={copyURL} className="p-2 bg-slate-900 border border-slate-800 rounded-lg text-slate-400 hover:text-white transition-all">
+            <button onClick={copyURL} className="p-2 bg-slate-900 border border-slate-800 rounded-lg text-slate-400 hover:text-white transition-all" aria-label="Share">
               <Share2 className="w-5 h-5" />
             </button>
-            <button onClick={() => setIsChatOpen(true)} className="bg-green-600 p-2 rounded-lg text-white shadow-lg active:scale-95 transition-all">
+            <button onClick={() => setIsChatOpen(true)} className="bg-green-600 p-2 rounded-lg text-white shadow-lg active:scale-95 transition-all" aria-label="AI Chat">
               <WhatsAppIcon className="w-5 h-5" />
             </button>
           </div>
@@ -144,7 +144,7 @@ const App: React.FC = () => {
           <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
           <input 
             type="text"
-            placeholder="ابحث عن أي خدمة في الرشيدية..."
+            placeholder="ابحث عن صيدلية، مطعم، دكتور..."
             className="w-full bg-slate-900 border border-slate-800 rounded-2xl py-4 pr-12 pl-4 outline-none focus:border-indigo-500 transition-all text-sm font-semibold"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -171,7 +171,7 @@ const App: React.FC = () => {
           {filteredBusinesses.map(biz => (
             <div 
               key={biz.id} 
-              className={`p-5 rounded-2xl bg-slate-900 border transition-all ${biz.isPinned ? 'border-indigo-500/50 bg-indigo-500/5' : 'border-slate-800'}`}
+              className={`p-5 rounded-2xl bg-slate-900 border transition-all hover:border-slate-700 ${biz.isPinned ? 'border-indigo-500/50 bg-indigo-500/5 shadow-lg shadow-indigo-500/5' : 'border-slate-800'}`}
             >
               <div className="flex justify-between items-start mb-4">
                 <div>
@@ -182,7 +182,7 @@ const App: React.FC = () => {
                     <p className="text-[11px] font-medium">{biz.address}</p>
                   </div>
                 </div>
-                <button onClick={(e) => toggleFavorite(biz.id, e)} className="p-1">
+                <button onClick={(e) => toggleFavorite(biz.id, e)} className="p-1" aria-label="Toggle Favorite">
                   <Heart className={`w-5 h-5 transition-all ${favorites.includes(biz.id) ? 'fill-rose-500 text-rose-500' : 'text-slate-700 hover:text-slate-600'}`} />
                 </button>
               </div>
@@ -191,7 +191,7 @@ const App: React.FC = () => {
                 <a href={`tel:${biz.phone}`} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-bold transition-all active:scale-95 shadow-lg shadow-indigo-600/20">
                   <Phone className="w-4 h-4" /> اتصال
                 </a>
-                <a href={`https://wa.me/${biz.whatsapp}`} target="_blank" className="flex-1 bg-green-600/10 text-green-500 hover:bg-green-600/20 py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-bold border border-green-600/20 transition-all active:scale-95">
+                <a href={`https://wa.me/${biz.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex-1 bg-green-600/10 text-green-500 hover:bg-green-600/20 py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-bold border border-green-600/20 transition-all active:scale-95">
                   <WhatsAppIcon className="w-4 h-4" /> واتساب
                 </a>
               </div>
@@ -199,43 +199,75 @@ const App: React.FC = () => {
           ))}
         </div>
 
+        {filteredBusinesses.length === 0 && (
+          <div className="text-center py-20 text-slate-500">
+            <Search className="w-12 h-12 mx-auto mb-4 opacity-20" />
+            <p className="font-bold">لم يتم العثور على نتائج للبحث</p>
+          </div>
+        )}
+
         <footer className="mt-12 p-8 border-t border-slate-900 text-center">
           <p className="text-xs text-slate-500 font-bold leading-relaxed max-w-sm mx-auto">
-            صمم هذا التطبيق لخدمة اهالي مخيم الرشيدية بواسطة ابتسام احمد ديب
+            دليل خدمات مخيم الرشيدية - فخورون بخدمتكم<br/>
+            صمم بواسطة ابتسام احمد ديب
           </p>
         </footer>
       </main>
 
       {isChatOpen && (
-        <div className="fixed inset-0 z-50 bg-[#020617] flex flex-col sm:max-w-md sm:mr-auto border-r border-slate-800 animate-in slide-in-from-left duration-300">
+        <div className="fixed inset-0 z-50 bg-[#020617] flex flex-col sm:max-w-md sm:mr-auto border-r border-slate-800 animate-in slide-in-from-left duration-300 shadow-2xl">
           <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900">
             <div className="flex items-center gap-2">
-              <WhatsAppIcon className="w-5 h-5 text-green-500" />
-              <h3 className="font-bold text-sm">المساعد الذكي (ابتسام ديب)</h3>
+              <div className="bg-green-600 p-1.5 rounded-lg">
+                <WhatsAppIcon className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h3 className="font-bold text-sm">المساعد الذكي</h3>
+                <p className="text-[10px] text-green-500 font-bold">متصل الآن</p>
+              </div>
             </div>
-            <button onClick={() => setIsChatOpen(false)} className="p-1 text-slate-400 hover:text-white"><X className="w-6 h-6" /></button>
+            <button onClick={() => setIsChatOpen(false)} className="p-1 text-slate-400 hover:text-white transition-colors">
+              <X className="w-6 h-6" />
+            </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-950/50">
+            <div className="flex justify-start">
+              <div className="max-w-[85%] p-3 rounded-2xl text-sm font-medium bg-slate-800 text-slate-100 border border-slate-700">
+                مرحباً بك في دليل الرشيدية! أنا مساعدك الذكي، اطلب مني أي رقم وسأحاول مساعدتك فوراً.
+              </div>
+            </div>
             {chatMessages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] p-3 rounded-2xl text-sm font-medium ${m.role === 'user' ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-100 border border-slate-700'}`}>
+                <div className={`max-w-[85%] p-3 rounded-2xl text-sm font-medium ${m.role === 'user' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'bg-slate-800 text-slate-100 border border-slate-700'}`}>
                   {m.text}
                 </div>
               </div>
             ))}
-            {isTyping && <div className="text-[10px] text-indigo-400 font-black animate-pulse px-2">جاري البحث...</div>}
+            {isTyping && (
+              <div className="flex justify-start">
+                <div className="bg-slate-800 p-3 rounded-2xl border border-slate-700 flex gap-1 items-center">
+                  <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce"></div>
+                  <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                  <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+                </div>
+              </div>
+            )}
             <div ref={chatEndRef} />
           </div>
           <div className="p-4 bg-slate-900 border-t border-slate-800">
             <div className="flex gap-2">
               <input 
-                className="flex-1 bg-slate-800 px-4 py-3 rounded-xl outline-none text-sm font-bold placeholder-slate-600" 
+                className="flex-1 bg-slate-800 px-4 py-3 rounded-xl outline-none text-sm font-bold placeholder-slate-600 focus:ring-2 ring-indigo-500/20 transition-all" 
                 placeholder="اسألني عن أي رقم..." 
                 value={userInput}
                 onChange={e => setUserInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSendMessage()}
               />
-              <button onClick={handleSendMessage} className="bg-indigo-600 p-3 rounded-xl text-white shadow-lg active:scale-95 transition-all">
+              <button 
+                onClick={handleSendMessage} 
+                disabled={!userInput.trim() || isTyping}
+                className="bg-indigo-600 p-3 rounded-xl text-white shadow-lg active:scale-95 transition-all disabled:opacity-50 disabled:scale-100"
+              >
                 <Send className="w-5 h-5" />
               </button>
             </div>
@@ -245,7 +277,7 @@ const App: React.FC = () => {
 
       {showCopySuccess && (
         <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[100] bg-green-600 text-white px-6 py-3 rounded-full font-bold text-xs shadow-xl flex items-center gap-2 animate-in slide-in-from-bottom duration-300">
-          تم نسخ الرابط بنجاح
+          <CheckCircle2 className="w-4 h-4" /> تم نسخ الرابط بنجاح
         </div>
       )}
     </div>

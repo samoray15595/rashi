@@ -8,7 +8,9 @@ export enum Category {
   DELIVERY = 'دليفري',
   BUTCHER = 'ملاحم',
   SHOE_STORE = 'محلات أحذية',
-  WATER_STATION = 'محطات مياه'
+  WATER_STATION = 'محطات مياه',
+  POULTRY = 'فراريج',
+  ICE_CREAM = 'مثلجات'
 }
 
 export interface Business {

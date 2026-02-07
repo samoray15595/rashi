@@ -24,52 +24,29 @@ export const INITIAL_BUSINESSES: Business[] = [
     isPinned: true
   },
 
+  // --- فراريج مخيم الرشيدية (الجديد) ---
+  { id: 'pou_baraka1', name: 'فروج البركة / محمد جواد', category: Category.POULTRY, phone: '+96171209108', whatsapp: '96171209108', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'pou_baraka2', name: 'مطبخ ومتبلات البركة / احمد جواد', category: Category.POULTRY, phone: '+96178985886', whatsapp: '96178985886', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'pou_safouri_y', name: 'فروج ومتبلات ياسر الصفوري', category: Category.POULTRY, phone: '+96176883656', whatsapp: '96176883656', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'pou_muna', name: 'فروج المنى / غسان الشولي', category: Category.POULTRY, phone: '+96176097213', whatsapp: '96176097213', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'pou_shibli', name: 'فروج معتصم يعقوب / الشبلي', category: Category.POULTRY, phone: '+96176033486', whatsapp: '96176033486', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'pou_khattab', name: 'فروج ياسر خطاب', category: Category.POULTRY, phone: '+96176646723', whatsapp: '96176646723', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'pou_khaled_w', name: 'فروج خالد وليد أبو خالد', category: Category.POULTRY, phone: '+96176883656', whatsapp: '96176883656', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'pou_dahab', name: 'فروج ومتبلات أبو الذهب', category: Category.POULTRY, phone: '+96176855400', whatsapp: '96176855400', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'pou_fowzi', name: 'فروج فوزي حسن', category: Category.POULTRY, phone: '+96176106455', whatsapp: '96176106455', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'pou_olayan', name: 'فروج عليان', category: Category.POULTRY, phone: '+96178770479', whatsapp: '96178770479', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'pou_samer_azzam', name: 'لحومات ومتبلات سامر عزام', category: Category.POULTRY, phone: '+96171418071', whatsapp: '96171418071', address: 'مخيم الرشيدية', isOpen: true },
+
+  // --- مثلجات مخيم الرشيدية (الجديد) ---
+  { id: 'ice_special', name: 'مثلجات سبيسيال / محمد فياض', category: Category.ICE_CREAM, phone: '+96181536314', whatsapp: '96181536314', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'ice_nehro', name: 'مثلجات علاء نهرو', category: Category.ICE_CREAM, phone: '+96170744081', whatsapp: '96170744081', address: 'مخيم الرشيدية', isOpen: true },
+
   // --- محطات المياه ---
-  {
-    id: 'water_ridda',
-    name: 'مياه الرضا',
-    category: Category.WATER_STATION,
-    phone: '+96171848705',
-    whatsapp: '96171848705',
-    address: 'مخيم الرشيدية',
-    isOpen: true
-  },
-  {
-    id: 'water_balsam',
-    name: 'مياه بلسم',
-    category: Category.WATER_STATION,
-    phone: '+96181912615',
-    whatsapp: '96181912615',
-    address: 'مخيم الرشيدية',
-    isOpen: true
-  },
-  {
-    id: 'water_adnan',
-    name: 'مياه العدنان',
-    category: Category.WATER_STATION,
-    phone: '+96176785731',
-    whatsapp: '96176785731',
-    address: 'مخيم الرشيدية',
-    isOpen: true
-  },
-  {
-    id: 'water_family',
-    name: 'مياه العائلة',
-    category: Category.WATER_STATION,
-    phone: '+96176723240',
-    whatsapp: '96176723240',
-    address: 'مخيم الرشيدية',
-    isOpen: true
-  },
-  {
-    id: 'water_zamzam',
-    name: 'مياة زمزم',
-    category: Category.WATER_STATION,
-    phone: '+96178791878',
-    whatsapp: '96178791878',
-    address: 'مخيم الرشيدية',
-    isOpen: true
-  },
+  { id: 'water_ridda', name: 'مياه الرضا', category: Category.WATER_STATION, phone: '+96171848705', whatsapp: '96171848705', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'water_balsam', name: 'مياه بلسم', category: Category.WATER_STATION, phone: '+96181912615', whatsapp: '96181912615', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'water_adnan', name: 'مياه العدنان', category: Category.WATER_STATION, phone: '+96176785731', whatsapp: '96176785731', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'water_family', name: 'مياه العائلة', category: Category.WATER_STATION, phone: '+96176723240', whatsapp: '96176723240', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'water_zamzam', name: 'مياة زمزم', category: Category.WATER_STATION, phone: '+96178791878', whatsapp: '96178791878', address: 'مخيم الرشيدية', isOpen: true },
 
   // --- ملاحم مخيم الرشيدية ---
   { id: 'bt_nakha', name: 'ملحمة النكهة', category: Category.BUTCHER, phone: '+96171696868', whatsapp: '96171696868', address: 'مخيم الرشيدية', isOpen: true },
@@ -181,5 +158,7 @@ export const CATEGORIES_LIST = [
   Category.BUTCHER,
   Category.WATER_STATION,
   Category.SHOE_STORE,
+  Category.POULTRY,
+  Category.ICE_CREAM,
   Category.INSTITUTION
 ];

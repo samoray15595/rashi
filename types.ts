@@ -7,6 +7,7 @@ export enum Category {
   DELIVERY = 'دليفري',
   BUTCHER = 'ملاحم',
   SHOE_STORE = 'محلات أحذية',
+  CLOTHING_STORE = 'محلات ملابس',
   WATER_STATION = 'محطات مياه',
   POULTRY = 'فراريج',
   ICE_CREAM = 'مثلجات',
@@ -14,7 +15,14 @@ export enum Category {
   LAUNDRY = 'مغاسل',
   CARPENTER = 'نجار',
   ALUMINUM = 'ألمنيوم',
-  HOSPITALS = 'مستشفيات صور'
+  HOSPITALS = 'مستشفيات صور',
+  AGRICULTURE = 'زراعة وبستنة',
+  COFFEE_HOOKAH = 'قهاوي وأراجيل',
+  NURSE = 'ممرض خاص',
+  COCKTAILS_SWEETS = 'كوكتيلات حلويات وكعك',
+  COMMERCIAL_STORES = 'محلات تجارية',
+  PHONE_SERVICES = 'محلات تليفونات',
+  SHEIKHS = 'مشايخ'
 }
 
 export interface Business {

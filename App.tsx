@@ -11,16 +11,76 @@ import {
   Download,
   Bot,
   Sparkles,
-  UserPlus
+  UserPlus,
+  Eye,
+  ChevronRight,
+  ChevronLeft,
+  Pill,
+  UtensilsCrossed,
+  HeartPulse,
+  Croissant,
+  Building2,
+  Truck,
+  Drumstick,
+  ShoppingBag,
+  Droplets,
+  IceCream,
+  Globe,
+  WashingMachine,
+  Hammer,
+  Construction,
+  Hospital,
+  Leaf,
+  Coffee,
+  Palette,
+  Stethoscope,
+  Cake,
+  Store,
+  Smartphone,
+  BookOpen,
+  Award,
+  Shirt
 } from 'lucide-react';
 import { Category, Business, ChatMessage } from './types';
 import { INITIAL_BUSINESSES, CATEGORIES_LIST } from './constants';
-import { getSmartRecommendation } from './geminiService';
+import { getSmartRecommendation } from './services/geminiService';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
+
+const ITEMS_PER_PAGE = 10;
+
+const CategoryIcon = ({ category, className = "w-6 h-6" }: { category: Category, className?: string }) => {
+  switch (category) {
+    case Category.PHARMACY: return <Pill className={className} />;
+    case Category.RESTAURANT: return <UtensilsCrossed className={className} />;
+    case Category.DENTIST: return <HeartPulse className={className} />;
+    case Category.BAKERY: return <Croissant className={className} />;
+    case Category.INSTITUTION: return <Building2 className={className} />;
+    case Category.DELIVERY: return <Truck className={className} />;
+    case Category.BUTCHER: return <Drumstick className={className} />;
+    case Category.SHOE_STORE: return <ShoppingBag className={className} />;
+    case Category.CLOTHING_STORE: return <Shirt className={className} />;
+    case Category.WATER_STATION: return <Droplets className={className} />;
+    case Category.POULTRY: return <Drumstick className={className} />;
+    case Category.ICE_CREAM: return <IceCream className={className} />;
+    case Category.INTERNET: return <Globe className={className} />;
+    case Category.LAUNDRY: return <WashingMachine className={className} />;
+    case Category.CARPENTER: return <Hammer className={className} />;
+    case Category.ALUMINUM: return <Construction className={className} />;
+    case Category.HOSPITALS: return <Hospital className={className} />;
+    case Category.AGRICULTURE: return <Leaf className={className} />;
+    case Category.COFFEE_HOOKAH: return <Coffee className={className} />;
+    case Category.NURSE: return <Stethoscope className={className} />;
+    case Category.COCKTAILS_SWEETS: return <Cake className={className} />;
+    case Category.COMMERCIAL_STORES: return <Store className={className} />;
+    case Category.PHONE_SERVICES: return <Smartphone className={className} />;
+    case Category.SHEIKHS: return <BookOpen className={className} />;
+    default: return <Building2 className={className} />;
+  }
+};
 
 const WhatsAppIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
@@ -37,6 +97,7 @@ const TikTokIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
 const App: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<Category | 'الكل' | 'المفضلة'>('الكل');
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [userInput, setUserInput] = useState('');
@@ -45,25 +106,36 @@ const App: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
+  const [visitCount, setVisitCount] = useState(0);
+  const [imageError, setImageError] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const listTopRef = useRef<HTMLDivElement>(null);
+
+  const bannerUrl = "https://cdn.jina.ai/assistant/d8601662-8f9f-4f51-893f-5d0758417c8f/f9642071-881b-43d9-813c-7389025c8681.png";
   
   const [favorites, setFavorites] = useState<string[]>(() => {
     try {
-      const saved = localStorage.getItem('rashidiya_favs_v6');
+      const saved = localStorage.getItem('rashidiya_favs_v5');
       return saved ? JSON.parse(saved) : [];
     } catch (e) { return []; }
   });
 
   useEffect(() => {
+    const savedVisits = localStorage.getItem('rashidiya_visits_v1');
+    const initialCount = savedVisits ? parseInt(savedVisits) : 1842;
+    const newCount = initialCount + 1;
+    localStorage.setItem('rashidiya_visits_v1', newCount.toString());
+    setVisitCount(newCount);
+  }, []);
+
+  useEffect(() => {
     const isIphone = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     setIsIOS(isIphone);
-
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       setTimeout(() => setShowInstallModal(true), 5000);
     };
-
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   }, []);
@@ -79,7 +151,7 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem('rashidiya_favs_v6', JSON.stringify(favorites));
+    localStorage.setItem('rashidiya_favs_v5', JSON.stringify(favorites));
   }, [favorites]);
 
   useEffect(() => {
@@ -88,6 +160,10 @@ const App: React.FC = () => {
     }
   }, [chatMessages, isTyping]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory, searchTerm]);
+
   const toggleFavorite = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     setFavorites(prev => 
@@ -95,7 +171,7 @@ const App: React.FC = () => {
     );
   };
 
-  const filteredBusinesses = useMemo(() => {
+  const allFilteredBusinesses = useMemo(() => {
     const lowerSearch = searchTerm.toLowerCase();
     const baseList = INITIAL_BUSINESSES.filter(biz => {
       const matchesSearch = biz.name.toLowerCase().includes(lowerSearch) || 
@@ -107,15 +183,25 @@ const App: React.FC = () => {
     return [...baseList].sort((a, b) => (a.isPinned === b.isPinned ? 0 : a.isPinned ? -1 : 1));
   }, [activeCategory, searchTerm, favorites]);
 
+  const totalPages = Math.ceil(allFilteredBusinesses.length / ITEMS_PER_PAGE);
+  
+  const currentBusinesses = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return allFilteredBusinesses.slice(start, start + ITEMS_PER_PAGE);
+  }, [allFilteredBusinesses, currentPage]);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    listTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const handleSendMessage = async () => {
     if (!userInput.trim()) return;
     const msg = userInput;
     setChatMessages(prev => [...prev, { role: 'user', text: msg }]);
     setUserInput('');
     setIsTyping(true);
-    
     const aiResponse = await getSmartRecommendation(msg, INITIAL_BUSINESSES);
-    
     setIsTyping(false);
     setChatMessages(prev => [...prev, { role: 'model', text: aiResponse }]);
   };
@@ -170,18 +256,18 @@ const App: React.FC = () => {
       </header>
 
       <main className="max-w-4xl mx-auto w-full p-4 flex-1">
-        <div className="relative mb-6">
+        <div className="relative mb-6" ref={listTopRef}>
           <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
           <input 
             type="text"
-            placeholder="ابحث عن صيدلية، مطعم، دكتور..."
+            placeholder="ابحث عن ممرض، صيدلية، مطعم..."
             className="w-full bg-slate-900 border border-slate-800 rounded-2xl py-4 pr-12 pl-4 outline-none focus:border-indigo-500 transition-all text-sm font-semibold"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-8 justify-center overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex flex-wrap gap-2 mb-6 justify-center overflow-x-auto pb-2 scrollbar-hide">
           {['الكل', 'المفضلة', ...CATEGORIES_LIST].map(cat => (
             <button
               key={cat}
@@ -197,30 +283,114 @@ const App: React.FC = () => {
           ))}
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          {filteredBusinesses.map(biz => (
+        {/* بنر إعلاني احترافي */}
+        <div className="mb-6 relative group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-600 rounded-[2rem] blur-xl opacity-25 group-hover:opacity-60 transition duration-1000"></div>
+          
+          <div className="relative overflow-hidden rounded-[2rem] shadow-2xl border border-white/10 bg-slate-900 transition-all duration-500 group-hover:scale-[1.01] group-hover:shadow-indigo-500/10">
+            <a 
+              href="https://wa.me/966531354751" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block relative w-full"
+            >
+              {!imageError ? (
+                <div className="aspect-[3/1] w-full relative">
+                   <img 
+                    src={bannerUrl} 
+                    alt="تصاميم ابتسام ديب" 
+                    className="w-full h-full object-cover transition-opacity duration-700"
+                    onError={() => setImageError(true)}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 to-transparent"></div>
+                </div>
+              ) : (
+                <div className="aspect-[3/1] w-full bg-gradient-to-br from-indigo-950 via-indigo-700 to-blue-800 p-8 sm:p-12 flex items-center justify-center text-center overflow-hidden relative">
+                   <div className="absolute inset-0 opacity-10 pointer-events-none grid grid-cols-6 gap-8 rotate-12 -translate-y-12">
+                      {[...Array(18)].map((_, i) => (
+                        <Palette key={i} className="w-16 h-16 text-white" />
+                      ))}
+                   </div>
+                   
+                   <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl -mr-24 -mt-24 animate-pulse"></div>
+                   <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-400/20 rounded-full blur-3xl -ml-32 -mb-32 animate-pulse [animation-delay:1s]"></div>
+                   
+                   <div className="relative z-10 flex flex-col items-center gap-3 sm:gap-4 max-w-2xl">
+                      <div className="bg-white/10 p-3 sm:p-5 rounded-[1.5rem] backdrop-blur-md border border-white/20 animate-bounce shadow-xl">
+                        <Palette className="w-8 h-8 sm:w-12 sm:h-12 text-white" />
+                      </div>
+                      <h2 className="text-xl sm:text-4xl font-black text-white leading-tight drop-shadow-lg">ابتسام أحمد ديب لخدمات التصميم الإبداعية</h2>
+                      <p className="text-[10px] sm:text-[15px] text-indigo-100 font-bold bg-black/30 px-5 py-2 rounded-full border border-white/10 shadow-inner">
+                        تصميم لوغو، هويات بصرية، وبنرات احترافية لمشروعك أو لمصلحتك
+                      </p>
+                      <div className="mt-2 sm:mt-4 flex items-center gap-2 bg-white text-indigo-950 px-6 py-3 sm:px-10 sm:py-4 rounded-[1.2rem] font-black text-xs sm:text-sm shadow-2xl transition-all hover:-translate-y-1 active:scale-95">
+                        <WhatsAppIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                        تواصل معنا لبدء مشروعك
+                      </div>
+                   </div>
+                </div>
+              )}
+            </a>
+          </div>
+        </div>
+
+        {/* شريط الشكر المتحرك */}
+        <div className="mb-10 overflow-hidden bg-white/5 border-y border-white/10 py-3 relative backdrop-blur-sm rounded-xl">
+          <div className="animate-marquee flex items-center">
+             <span className="text-xs sm:text-sm font-bold text-white/90 mx-4 flex items-center gap-2">
+               <Heart className="w-4 h-4 text-rose-500 fill-rose-500 animate-pulse" />
+               شكر خاص للحاج زياد اسعد على مجهوداته المبذولة لتجميع الارقام لمشاركتها معكم في هذا الدليل الذكي
+               <Award className="w-4 h-4 text-amber-400" />
+             </span>
+             <span className="text-xs sm:text-sm font-bold text-white/90 mx-4 flex items-center gap-2">
+               <Heart className="w-4 h-4 text-rose-500 fill-rose-500 animate-pulse" />
+               شكر خاص للحاج زياد اسعد على مجهوداته المبذولة لتجميع الارقام لمشاركتها معكم في هذا الدليل الذكي
+               <Award className="w-4 h-4 text-amber-400" />
+             </span>
+             <span className="text-xs sm:text-sm font-bold text-white/90 mx-4 flex items-center gap-2">
+               <Heart className="w-4 h-4 text-rose-500 fill-rose-500 animate-pulse" />
+               شكر خاص للحاج زياد اسعد على مجهوداته المبذولة لتجميع الارقام لمشاركتها معكم في هذا الدليل الذكي
+               <Award className="w-4 h-4 text-amber-400" />
+             </span>
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2 min-h-[400px]">
+          {currentBusinesses.map(biz => (
             <div 
               key={biz.id} 
-              className={`p-5 rounded-2xl bg-slate-900 border transition-all hover:border-slate-700 ${biz.isPinned ? 'border-indigo-500/50 bg-indigo-500/5' : 'border-slate-800'}`}
+              className={`p-5 rounded-2xl bg-slate-900 border transition-all hover:border-slate-700 group flex flex-col justify-between ${biz.isPinned ? 'border-indigo-500/50 bg-indigo-500/5 shadow-xl shadow-indigo-600/5' : 'border-slate-800'}`}
             >
               <div className="flex justify-between items-start mb-4">
-                <div>
-                  <span className="text-[10px] text-indigo-400 font-bold uppercase tracking-wider">{biz.category}</span>
-                  <h3 className="text-base font-bold text-white mt-1 leading-tight">{biz.name}</h3>
-                  <div className="flex items-center gap-1.5 mt-1 text-slate-500">
-                    <MapPin className="w-3.5 h-3.5" />
-                    <p className="text-[11px] font-medium">{biz.address}</p>
+                <div className="flex gap-3">
+                  <div className={`w-14 h-14 rounded-2xl shrink-0 flex items-center justify-center transition-transform group-hover:scale-110 relative ${biz.isPinned ? 'bg-indigo-600/20 text-indigo-400' : 'bg-slate-800 text-slate-400'}`}>
+                    <CategoryIcon category={biz.category} />
+                    {biz.isPinned && (
+                      <div className="absolute -top-1 -right-1 bg-indigo-600 p-1 rounded-full border border-slate-900">
+                        <Sparkles className="w-2.5 h-2.5 text-white" />
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div>
+                    <span className="text-[9px] text-indigo-400 font-black uppercase tracking-widest bg-indigo-500/10 px-2 py-0.5 rounded-md">{biz.category}</span>
+                    <h3 className="text-[15px] font-black text-white mt-1 leading-tight">{biz.name}</h3>
+                    <div className="flex items-center gap-1.5 mt-1 text-slate-500">
+                      <MapPin className="w-3 h-3" />
+                      <p className="text-[10px] font-bold">{biz.address}</p>
+                    </div>
                   </div>
                 </div>
+                
                 <button onClick={(e) => toggleFavorite(biz.id, e)} className="p-1">
                   <Heart className={`w-5 h-5 transition-all ${favorites.includes(biz.id) ? 'fill-rose-500 text-rose-500' : 'text-slate-700 hover:text-slate-600'}`} />
                 </button>
               </div>
 
-              <div className="flex gap-2 flex-wrap sm:flex-nowrap">
+              <div className="flex gap-2 flex-wrap sm:flex-nowrap mt-2">
                 <a 
                   href={`tel:${biz.phone}`} 
-                  className={`bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-bold transition-all active:scale-95 shadow-lg shadow-indigo-600/20 ${biz.tiktok ? 'flex-[0.7]' : 'flex-1'}`}
+                  className={`bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-black transition-all active:scale-95 shadow-lg shadow-indigo-600/20 ${biz.tiktok ? 'flex-[0.7]' : 'flex-1'}`}
                 >
                   <Phone className="w-4 h-4" /> اتصال
                 </a>
@@ -240,43 +410,73 @@ const App: React.FC = () => {
                   href={`https://wa.me/${biz.whatsapp?.replace(/\D/g, '')}`} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="flex-1 bg-green-600/10 text-green-500 hover:bg-green-600/20 py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-bold border border-green-600/20 transition-all active:scale-95"
+                  className="flex-1 bg-green-600/10 text-green-500 hover:bg-green-600/20 py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-black border border-green-600/20 transition-all active:scale-95"
                 >
                   <WhatsAppIcon className="w-4 h-4" /> واتساب
                 </a>
               </div>
             </div>
           ))}
+          
+          {currentBusinesses.length === 0 && (
+            <div className="col-span-full py-20 text-center">
+              <div className="bg-slate-900/50 rounded-3xl p-8 border border-dashed border-slate-800">
+                <p className="text-slate-500 font-bold">لم يتم العثور على نتائج للبحث الحالي</p>
+              </div>
+            </div>
+          )}
         </div>
+
+        {totalPages > 1 && (
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`p-3 rounded-xl flex items-center gap-2 font-black text-xs transition-all border ${
+                currentPage === totalPages 
+                ? 'bg-slate-900 border-slate-800 text-slate-700 opacity-50 cursor-not-allowed' 
+                : 'bg-indigo-600 border-indigo-500 text-white active:scale-95 shadow-lg shadow-indigo-600/20 hover:bg-indigo-700'
+              }`}
+            >
+              التالي <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            <div className="bg-slate-900 px-6 py-3 rounded-xl border border-slate-800 flex items-center gap-2">
+              <span className="text-indigo-400 font-black text-sm">{currentPage}</span>
+              <span className="text-slate-600 font-bold text-xs">من</span>
+              <span className="text-slate-300 font-black text-sm">{totalPages}</span>
+            </div>
+
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`p-3 rounded-xl flex items-center gap-2 font-black text-xs transition-all border ${
+                currentPage === 1 
+                ? 'bg-slate-900 border-slate-800 text-slate-700 opacity-50 cursor-not-allowed' 
+                : 'bg-indigo-600 border-indigo-500 text-white active:scale-95 shadow-lg shadow-indigo-600/20 hover:bg-indigo-700'
+              }`}
+            >
+              <ChevronRight className="w-4 h-4" /> السابق
+            </button>
+          </div>
+        )}
       </main>
 
-      <footer className="mt-12 py-10 border-t border-slate-800 text-center px-4">
-        <p className="text-slate-400 text-sm font-bold leading-relaxed">
+      <footer className="mt-12 py-10 border-t border-slate-800 text-center px-4 bg-slate-900/30">
+        <p className="text-slate-400 text-sm font-bold leading-relaxed mb-4">
           صمم هذا التطبيق لمساعدة اهل المخيم بواسطة ابتسام احمد ديب
         </p>
-        <div className="mt-4 flex justify-center gap-4 text-[10px] text-slate-600 font-bold uppercase tracking-widest">
+        
+        <div className="flex items-center justify-center gap-2 mb-4 bg-indigo-500/10 w-fit mx-auto px-4 py-1.5 rounded-full border border-indigo-500/20">
+          <Eye className="w-4 h-4 text-indigo-400" />
+          <span className="text-[11px] font-black text-indigo-400">عدد المشاهدات:</span>
+          <span className="text-xs font-black text-white tabular-nums">{visitCount.toLocaleString()}</span>
+        </div>
+
+        <div className="flex justify-center gap-4 text-[10px] text-slate-600 font-bold uppercase tracking-widest">
           <span>جميع الحقوق محفوظة لابتسام ديب © 2026</span>
         </div>
       </footer>
-
-      {showInstallModal && (
-        <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 bg-black/70 backdrop-blur-md">
-          <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-indigo-600 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg shadow-indigo-600/30">
-                <Download className="w-8 h-8 text-white" />
-              </div>
-              <h2 className="text-xl font-black text-white mb-2">ثبّت التطبيق الآن</h2>
-              <p className="text-sm text-slate-400 font-bold mb-6">للوصول السريع لكل أرقام مخيم الرشيدية بضغطة واحدة.</p>
-              <div className="flex gap-3">
-                <button onClick={() => setShowInstallModal(false)} className="flex-1 bg-slate-800 text-slate-400 py-3.5 rounded-2xl font-black text-sm">إلغاء</button>
-                {!isIOS && <button onClick={handleInstallClick} className="flex-1 bg-indigo-600 text-white py-3.5 rounded-2xl font-black text-sm">تثبيت الآن</button>}
-                {isIOS && <button onClick={() => setShowInstallModal(false)} className="flex-1 bg-indigo-600 text-white py-3.5 rounded-2xl font-black text-sm">فهمت</button>}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {isChatOpen && (
         <div className="fixed inset-0 z-50 bg-[#020617] flex flex-col sm:max-w-md sm:mr-auto border-r border-slate-800 animate-in slide-in-from-left duration-300 shadow-2xl">

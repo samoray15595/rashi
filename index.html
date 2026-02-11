@@ -23,6 +23,7 @@
         font-family: 'Cairo', sans-serif;
         background-color: #020617;
         color: #f8fafc;
+        overflow-x: hidden;
       }
       ::-webkit-scrollbar {
         width: 8px;
@@ -38,18 +39,72 @@
         background: #334155;
       }
 
-      /* Marquee Animation - Left to Right */
-      @keyframes marquee {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
+      /* Hide scrollbar for elements with .scrollbar-hide */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
       }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Seamless Marquee Animation */
+      @keyframes marquee-loop {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(50%); }
+      }
+      
+      .marquee-container {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      }
+
       .animate-marquee {
-        display: inline-block;
+        display: flex;
         white-space: nowrap;
-        animation: marquee 30s linear infinite;
+        animation: marquee-loop 30s linear infinite;
+        width: max-content;
       }
-      .animate-marquee:hover {
+
+      .animate-marquee-fast {
+        display: flex;
+        white-space: nowrap;
+        animation: marquee-loop 25s linear infinite;
+        width: max-content;
+      }
+
+      .animate-marquee:hover, .animate-marquee-fast:hover {
         animation-play-state: paused;
+      }
+
+      /* Animated Banner Background - Updated to Pink & Blue */
+      @keyframes mesh-gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .creative-banner-bg {
+        background: linear-gradient(-45deg, #ec4899, #3b82f6, #d946ef, #2563eb);
+        background-size: 400% 400%;
+        animation: mesh-gradient 12s ease infinite;
+      }
+
+      @keyframes float-shapes {
+        0% { transform: translate(0, 0) rotate(0deg); opacity: 0.2; }
+        50% { transform: translate(20px, -20px) rotate(180deg); opacity: 0.5; }
+        100% { transform: translate(0, 0) rotate(360deg); opacity: 0.2; }
+      }
+
+      .floating-shape {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        animation: float-shapes 15s infinite ease-in-out;
+        z-index: 1;
       }
     </style>
     <script type="importmap">
@@ -70,15 +125,6 @@
   <body>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('Service Worker Registered'))
-            .catch(err => console.log('Service Worker Registration Failed', err));
-        });
-      }
-    </script>
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>

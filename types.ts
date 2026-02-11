@@ -1,28 +1,31 @@
 export enum Category {
-  PHARMACY = 'صيدليات',
-  RESTAURANT = 'مطاعم',
-  DENTIST = 'عيادات أسنان',
   BAKERY = 'أفران',
-  INSTITUTION = 'مؤسسات',
-  DELIVERY = 'دليفري',
-  BUTCHER = 'ملاحم',
-  SHOE_STORE = 'محلات أحذية',
-  CLOTHING_STORE = 'محلات ملابس',
-  WATER_STATION = 'محطات مياه',
-  POULTRY = 'فراريج',
-  ICE_CREAM = 'مثلجات',
-  INTERNET = 'إنترنت',
-  LAUNDRY = 'مغاسل',
-  CARPENTER = 'نجار',
   ALUMINUM = 'ألمنيوم',
-  HOSPITALS = 'مستشفيات صور',
+  INTERNET = 'إنترنت',
+  DELIVERY = 'دليفري',
   AGRICULTURE = 'زراعة وبستنة',
+  BARBER_BEAUTY = 'صالون حلاقة وتجميل',
+  PLUMBING_TILING = 'صحية وبلاط',
+  PHARMACY = 'صيدليات',
+  DENTIST = 'عيادات أسنان',
+  POULTRY = 'فراريج',
   COFFEE_HOOKAH = 'قهاوي وأراجيل',
-  NURSE = 'ممرض خاص',
+  ELECTRICITY = 'كهرباء عامة',
   COCKTAILS_SWEETS = 'كوكتيلات حلويات وكعك',
+  ICE_CREAM = 'مثلجات',
+  WATER_STATION = 'محطات مياه',
+  SHOE_STORE = 'محلات أحذية',
   COMMERCIAL_STORES = 'محلات تجارية',
   PHONE_SERVICES = 'محلات تليفونات',
-  SHEIKHS = 'مشايخ'
+  CLOTHING_STORE = 'محلات ملابس',
+  HOSPITALS = 'مستشفيات صور',
+  SHEIKHS = 'مشايخ',
+  RESTAURANT = 'مطاعم',
+  LAUNDRY = 'مغاسل',
+  BUTCHER = 'ملاحم',
+  NURSE = 'ممرض خاص',
+  INSTITUTION = 'مؤسسات',
+  CARPENTER = 'نجار'
 }
 
 export interface Business {
@@ -31,11 +34,21 @@ export interface Business {
   category: Category;
   phone: string;
   whatsapp?: string;
+  whatsappChannel?: string;
   tiktok?: string;
   address: string;
   mapUrl?: string;
   isOpen: boolean;
   isPinned?: boolean;
+}
+
+export interface Advertisement {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl?: string;
+  link: string;
+  startDate?: string; // تاريخ بدء الإعلان بصيغة ISO (YYYY-MM-DD)
 }
 
 export interface ChatMessage {

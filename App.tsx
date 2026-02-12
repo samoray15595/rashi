@@ -551,13 +551,13 @@ const App: React.FC = () => {
               <div className="bg-[#5346e0]/10 p-2 rounded-xl">
                 <Bot className="w-6 h-6" />
               </div>
-              <span className="font-black text-[17px] text-white">المساعد الذكي (سريع)</span>
+              <span className="font-black text-[17px] text-white">المساعد الذكي (رشيد)</span>
             </div>
             <button onClick={() => setIsChatOpen(false)} className="p-3 hover:bg-slate-800 rounded-full transition-colors"><X className="w-6 h-6 text-slate-400" /></button>
           </div>
           <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-[#020617] to-[#0f172a]">
              <div className="bg-[#1e293b]/50 border border-slate-800 p-6 rounded-[2.2rem] rounded-tr-none text-[13px] font-bold text-slate-300 leading-relaxed shadow-sm">
-                يا هلا بيك! أنا رشيد، مساعدك السريع جداً في المخيم. كيف بقدر أخدمك اليوم؟
+                يا مية أهلاً وسهلاً بك يا غالي! أنا "رشيد"، مساعدك الذكي وابن مخيمك. كيف بقدر أخدمك اليوم؟ آمرني وشو محتاج أرقام أنا جاهز من عيوني.
              </div>
              {chatMessages.map((m, i) => (
                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -568,7 +568,7 @@ const App: React.FC = () => {
              ))}
              {isTyping && (
                <div className="flex items-center gap-2 text-[#5346e0] text-[11px] font-black animate-pulse px-2">
-                 <Bot className="w-4 h-4" /> جاري الرد فوراً...
+                 <Bot className="w-4 h-4" /> جاري الرد فوراً بكل ود...
                </div>
              )}
              <div ref={chatEndRef} />
@@ -576,7 +576,7 @@ const App: React.FC = () => {
           <div className="p-6 bg-[#0f172a] border-t border-slate-800 flex gap-3">
             <input 
               className="flex-1 bg-slate-800/80 px-5 py-4.5 rounded-2xl text-[13px] font-bold outline-none text-white border border-slate-700"
-              placeholder="اكتب طلبك هنا..." value={userInput} onChange={e => setUserInput(e.target.value)}
+              placeholder="شو محتاج أرقام اليوم؟" value={userInput} onChange={e => setUserInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSendMessage()}
             />
             <button onClick={handleSendMessage} className="bg-[#5346e0] p-4.5 rounded-2xl text-white shadow-xl shadow-indigo-600/20 active:scale-95 transition-all"><Send className="w-6 h-6" /></button>

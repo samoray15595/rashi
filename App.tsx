@@ -543,7 +543,7 @@ const App: React.FC = () => {
         <p className="text-slate-600 text-[10px] font-bold tracking-[0.2em] uppercase opacity-60">جميع الحقوق محفوظة لابتسام ديب © 2026</p>
       </footer>
 
-      {/* Chat رشيد */}
+      {/* Chat المساعد الذكي */}
       {isChatOpen && (
         <div className="fixed inset-0 z-50 bg-[#020617] flex flex-col sm:max-w-md sm:mr-auto border-r border-slate-800 animate-in slide-in-from-right duration-500 shadow-2xl">
           <div className="p-6 bg-[#0f172a] border-b border-slate-800 flex justify-between items-center shadow-lg">
@@ -551,13 +551,13 @@ const App: React.FC = () => {
               <div className="bg-[#5346e0]/10 p-2 rounded-xl">
                 <Bot className="w-6 h-6" />
               </div>
-              <span className="font-black text-[17px] text-white">المساعد الذكي (رشيد)</span>
+              <span className="font-black text-[17px] text-white">المساعد الذكي</span>
             </div>
             <button onClick={() => setIsChatOpen(false)} className="p-3 hover:bg-slate-800 rounded-full transition-colors"><X className="w-6 h-6 text-slate-400" /></button>
           </div>
           <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-[#020617] to-[#0f172a]">
              <div className="bg-[#1e293b]/50 border border-slate-800 p-6 rounded-[2.2rem] rounded-tr-none text-[13px] font-bold text-slate-300 leading-relaxed shadow-sm">
-                يا مية أهلاً وسهلاً بك يا غالي! أنا "رشيد"، مساعدك الذكي وابن مخيمك. كيف بقدر أخدمك اليوم؟ آمرني وشو محتاج أرقام أنا جاهز من عيوني.
+                يا مية أهلاً وسهلاً بك يا غالي! أنا مساعدك الذكي وابن مخيمك. كيف بقدر أخدمك اليوم؟ آمرني وشو محتاج أرقام أنا جاهز من عيوني.
              </div>
              {chatMessages.map((m, i) => (
                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>

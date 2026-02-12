@@ -3,9 +3,9 @@ import { Category, Business, Advertisement } from './types';
 export const ADS_DATA: Advertisement[] = [
   {
     id: 1,
-    title: 'مساحة إعلانية شاغرة 1',
-    description: 'عرض إعلانكم لمدة 3 أيام بـ 5$ فقط. تواصلوا معنا الآن.',
-    imageUrl: '', 
+    title: 'إعلان مميز 1',
+    description: 'مساحة إعلانية محجوزة.',
+    imageUrl: 'https://i.postimg.cc/5NGYmDN8/1770924601393-1.jpg', 
     link: 'https://wa.me/966531354751'
   },
   {
@@ -27,7 +27,7 @@ export const ADS_DATA: Advertisement[] = [
 ];
 
 export const INITIAL_BUSINESSES: Business[] = [
-  // --- العناصر المثبتة في المقدمة ---
+  // --- العناصر المثبتة في المقدمة (Pinned) ---
   {
     id: 'shoe1',
     name: 'احمد مصطفى ديب',
@@ -60,9 +60,47 @@ export const INITIAL_BUSINESSES: Business[] = [
     isOpen: true, 
     isPinned: true 
   },
+  { 
+    id: 'nurse1', 
+    name: 'الممرض الحاج زياد أسعد', 
+    category: Category.NURSE, 
+    phone: '+96170696190', 
+    whatsapp: '70696190', 
+    address: 'مخيم الرشيدية', 
+    isOpen: true, 
+    isPinned: true 
+  },
+  {
+    id: 'shoe_sheikha',
+    name: 'محمد شيخة (مبيع ملابس وأحذية ومستلزمات رياضية جملة ومفرق)',
+    category: Category.SHOE_STORE,
+    phone: '+96171510399',
+    whatsapp: '96171510399',
+    address: 'مخيم الرشيدية - بجانب جامع العودة',
+    isOpen: true,
+    isPinned: true
+  },
+  {
+    id: 'cupping_ajjawi',
+    name: 'الشيخ محمد عجاوي للعلاج الطبيعي بالعسل والحجامة والاعشاب',
+    category: Category.CUPPING,
+    phone: '+96176870599',
+    whatsapp: '76870599',
+    address: 'مخيم الرشيدية',
+    isOpen: true,
+    isPinned: true
+  },
+  {
+    id: 'cupping_zamzam',
+    name: 'الحاج فادي زمزم للحجامة',
+    category: Category.CUPPING,
+    phone: '+96170891350',
+    whatsapp: '70891350',
+    address: 'مخيم الرشيدية',
+    isOpen: true,
+    isPinned: true
+  },
   { id: 'sh1', name: 'الشيخ محمود ابراهيم', category: Category.SHEIKHS, phone: '+96171536650', whatsapp: '96171536650', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
-
-  // --- صالونات حلاقة وتجميل ---
   { 
     id: 'barber_fouad', 
     name: 'فؤاد ديب (صالون حلاقة وعطورات ومستلزمات الجسم من كريمات وزيوت الشعر)', 
@@ -73,6 +111,16 @@ export const INITIAL_BUSINESSES: Business[] = [
     isOpen: true,
     isPinned: true
   },
+  { id: 'pb1', name: 'حسام خالد ديب كهرباء وصحية', category: Category.PLUMBING_TILING, phone: '+32466498967', whatsapp: '32466498967', address: 'مخيم الرشيدية / بلجيكا', isOpen: true, isPinned: true },
+  { id: 'elec_asad_khawass', name: 'اسعد خواص ( مكانيك مواتير وكهرباء وكهربة بيوت)', category: Category.ELECTRICITY, phone: '+96178833171', whatsapp: '96178833171', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
+  { id: 'inst_1', name: 'اللجنة الشعبية لمخيم الرشيدية', category: Category.INSTITUTION, phone: '+96170621326', whatsapp: '70621326', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
+  { id: 'hosp_balsam', name: 'مستشفى بلسم / مخيم الرشيدية', category: Category.HOSPITALS, phone: '+9613625229', whatsapp: '3625229', address: 'مخيم الرشيدية (رقم إضافي: 81992156)', isOpen: true, isPinned: true },
+  { id: 'del_ibrahim', name: 'دليفري ابراهيم زمزم', category: Category.DELIVERY, phone: '+96176951402', whatsapp: '76951402', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
+  { id: 'del_mahmoud', name: 'دليفري محمود قاسم', category: Category.DELIVERY, phone: '+96176117281', whatsapp: '76117281', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
+  { id: 'del_omar', name: 'دليفري عمر هشوم', category: Category.DELIVERY, phone: '+96181821900', whatsapp: '81821900', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
+  { id: 'del_azzam', name: 'دليفري العزام', category: Category.DELIVERY, phone: '+96171727781', whatsapp: '71727781', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
+
+  // --- صالونات حلاقة وتجميل ---
   { id: 'barber_ayman', name: 'الحاج ايمن الصفدي ( الحنون )', category: Category.BARBER_BEAUTY, phone: '+9613709772', whatsapp: '3709772', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'barber_mahmoud_l', name: 'محمود لطفي الأحمد', category: Category.BARBER_BEAUTY, phone: '+96171392609', whatsapp: '71392609', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'barber_abuhani', name: 'ابو هاني ظاهر', category: Category.BARBER_BEAUTY, phone: '+96170958886', whatsapp: '70958886', address: 'مخيم الرشيدية', isOpen: true },
@@ -81,7 +129,6 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'barber_ali_salon', name: 'علي عجاوي (حلاق)', category: Category.BARBER_BEAUTY, phone: '+96181646068', whatsapp: '81646068', address: 'مخيم الرشيدية', isOpen: true },
 
   // --- صحية وبلاط ودهان ---
-  { id: 'pb1', name: 'حسام خالد ديب كهرباء وصحية', category: Category.PLUMBING_TILING, phone: '+32466498967', whatsapp: '32466498967', address: 'مخيم الرشيدية / بلجيكا', isOpen: true, isPinned: true },
   { id: 'pb2', name: 'الحاج موفق الشامي', category: Category.PLUMBING_TILING, phone: '+96176888785', whatsapp: '76888785', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'pb3', name: 'خالد محمد', category: Category.PLUMBING_TILING, phone: '+96176084435', whatsapp: '76084435', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'pb4', name: 'وسام الخطيب', category: Category.PLUMBING_TILING, phone: '+96170760856', whatsapp: '70760856', address: 'مخيم الرشيدية', isOpen: true },
@@ -89,8 +136,6 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'pb6', name: 'صالح الزعزوع', category: Category.PLUMBING_TILING, phone: '+96171945767', whatsapp: '71945767', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'pb7', name: 'شادي زمزم', category: Category.PLUMBING_TILING, phone: '+96170318347', whatsapp: '70318347', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'pb8', name: 'محمد علي خالد', category: Category.PLUMBING_TILING, phone: '+96170763972', whatsapp: '70763972', address: 'مخيم الرشيدية', isOpen: true },
-  
-  // --- أسماء البلاط والدهان ---
   { id: 'pb9', name: 'وسام ديب (بلاط)', category: Category.PLUMBING_TILING, phone: '+96170590695', whatsapp: '70590695', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'pb10', name: 'الحاج عماد العلي (بلاط)', category: Category.PLUMBING_TILING, phone: '+96170602947', whatsapp: '70602947', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'pb11', name: 'ابو محمود العرعور (بلاط)', category: Category.PLUMBING_TILING, phone: '+9613100971', whatsapp: '3100971', address: 'مخيم الرشيدية', isOpen: true },
@@ -139,7 +184,7 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'veg8', name: 'خالد عزيز للخضار والفاكهة', category: Category.VEGETABLES, phone: '+96181856530', whatsapp: '81856530', address: 'مخيم الرشيدية', isOpen: true },
 
   // --- الكترونيات وتبريد وصيانة ---
-  { id: 'elec_adnan', name: 'عدنان الهجاج ضيافة الكترونيات', category: Category.ELECTRONICS, phone: '+96181957018', whatsapp: '81957018', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'elec_adnan', name: 'عدنان هجاج صيانة الكترونيات', category: Category.ELECTRONICS, phone: '+96181957018', whatsapp: '81957018', address: 'شارع الحاج علي مرة', isOpen: true },
   { id: 'elec_yasser', name: 'ياسر هجاج صيانة شفاطات ومضخات مياه', category: Category.ELECTRONICS, phone: '+96171452165', whatsapp: '71452165', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'elec_fadi', name: 'فادي الزيني صيانة الكترونيات', category: Category.ELECTRONICS, phone: '+96170279722', whatsapp: '70279722', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'elec_nader', name: 'نادر خزعل تكييف وتبريد', category: Category.ELECTRONICS, phone: '+9613564008', whatsapp: '3564008', address: 'مخيم الرشيدية', isOpen: true },
@@ -176,7 +221,6 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'photo5', name: 'الحاج أبو أيمن المهداوي (تصوير فوتوغراف وتخليص معاملات)', category: Category.EVENT_PHOTOGRAPHY, phone: '+96170964281', whatsapp: '70964281', address: 'مخيم الرشيدية', isOpen: true },
 
   // --- المؤسسات ---
-  { id: 'inst_1', name: 'اللجنة الشعبية لمخيم الرشيدية', category: Category.INSTITUTION, phone: '+96170621326', whatsapp: '70621326', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
   { id: 'inst_2', name: 'مؤسسة الشهيد أبو جهاد الوزير / لتأهيل الأشخاص ذوي الإعاقة عبد أسعد', category: Category.INSTITUTION, phone: '+9613945375', whatsapp: '3945375', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_3', name: 'جمعية الشفاء للخدمات الطبية ( فرق الاسعاف والاطفاء )', category: Category.INSTITUTION, phone: '+9613076165', whatsapp: '3076165', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_4', name: 'جمعية الشفاء الطبية مخيم برج الشمالي', category: Category.INSTITUTION, phone: '+9617343840', whatsapp: '7343840', address: 'مخيم برج الشمالي', isOpen: true },
@@ -205,17 +249,17 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'inst_27', name: 'مجمع الاصلاح الاسلامية', category: Category.INSTITUTION, phone: '+96170394969', whatsapp: '70394969', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_28', name: 'مركز سنابل لرعاية المسنين أبو إبراهيم احمد فهد ابو الذهب', category: Category.INSTITUTION, phone: '+9613577320', whatsapp: '3577320', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_29', name: 'جمعية الدير القاسي / الحاج نمر حوراني', category: Category.INSTITUTION, phone: '+9613125843', whatsapp: '3125843', address: 'مخيم الرشيدية', isOpen: true },
-  { id: 'inst_30', name: 'لجنة السلم الاهلي / الحاج جمال dندشلي أبو علاء', category: Category.INSTITUTION, phone: '+96181635664', whatsapp: '81635664', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'inst_30', name: 'لجنة السلم الاهلي / الحاج جمال دندشلي أبو علاء', category: Category.INSTITUTION, phone: '+96181635664', whatsapp: '81635664', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_31', name: 'حملة الإرشاد الديني للحج والعمرة الشيخ معين المهداوي', category: Category.INSTITUTION, phone: '+96171324936', whatsapp: '71324936', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_32', name: 'حملة البشائر للحج والعمرة الشيخ حسن ذياب', category: Category.INSTITUTION, phone: '+96170153416', whatsapp: '70153416', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_33', name: 'مدير مخيم الرشيدية الأستاذ محمود شراري', category: Category.INSTITUTION, phone: '+96170084613', whatsapp: '70084613', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_34', name: 'مسؤول الصحة ( البلدية ) الحاج محمد الصفوري', category: Category.INSTITUTION, phone: '+96170183715', whatsapp: '70183715', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_35', name: 'مدير عيادة الاونروا الرشيدية الدكتور طارق ميعاري', category: Category.INSTITUTION, phone: '+96171242160', whatsapp: '71242160', address: 'مخيم الرشيدية', isOpen: true },
-  { id: 'inst_36', name: 'رابطة نور الأمل للمكفوفين الفلسطينيين في لبنان الحجة نحاة أسعد', category: Category.INSTITUTION, phone: '+96171431226', whatsapp: '71431226', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'inst_36', name: 'رابطة نور الأمل للمكفوفين الفلسطينيين في لبنان الحجة نجاة أسعد', category: Category.INSTITUTION, phone: '+96171431226', whatsapp: '71431226', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'inst_37', name: 'جمعية الهلال الأحمر الفلسطيني / العلاج الفيزيائي علي محمد', category: Category.INSTITUTION, phone: '+96171552537', whatsapp: '71552537', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'inst_38', name: 'حملة البشائر للحج والعمرة الحاج حسين الجمل', category: Category.INSTITUTION, phone: '+9613287365', whatsapp: '3287365', address: 'مخيم الرشيدية', isOpen: true },
 
   // --- معلمي الكهرباء الجدد ---
-  { id: 'elec_asad_khawass', name: 'اسعد خواص ( مكانيك مواتير وكهرباء وكهربة بيوت)', category: Category.ELECTRICITY, phone: '+96178833171', whatsapp: '96178833171', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
   { id: 'elec_khaled_hamoud', name: 'خالد حمود (كهرباء داخلية)', category: Category.ELECTRICITY, phone: '+96171219824', whatsapp: '96171219824', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'elec_abd_nimer', name: 'عبد الكريم النمر (كهرباء داخلية)', category: Category.ELECTRICITY, phone: '+96170019936', whatsapp: '70019936', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'elec_bilal_ahmad', name: 'بلال احمد (كهرباء داخلية)', category: Category.ELECTRICITY, phone: '+9613596898', whatsapp: '9613596898', address: 'مخيم الرشيدية', isOpen: true },
@@ -270,7 +314,7 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'comm24', name: 'محل محمد العمري ملبوسات رجالية', category: Category.COMMERCIAL_STORES, phone: '+96170734324', whatsapp: '70734324', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'comm25', name: 'محل الحاج معروف حمد ملبوسات رجالية', category: Category.COMMERCIAL_STORES, phone: '+96176621360', whatsapp: '76621360', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'comm_jwad', name: 'جواد الجنداوي اشاربات وشالات نسائية', category: Category.COMMERCIAL_STORES, phone: '+96181779087', whatsapp: '81779087', address: 'مخيم الرشيدية', isOpen: true },
-  { id: 'comm_hassan_h', name: 'عطارة حسن هجاج', category: Category.COMMERCIAL_STORES, phone: '+96171423699', whatsapp: '71423699', address: 'شارع الصفوري', isOpen: true },
+  { id: 'comm_hassan_h', name: 'محمصة حسن هجاج', category: Category.COMMERCIAL_STORES, phone: '+96171423699', whatsapp: '71423699', address: 'شارع الصفوري', isOpen: true },
   { id: 'comm_abu_malek', name: 'محمصة وماركت أبو مالك جلال هويدي', category: Category.COMMERCIAL_STORES, phone: '+9613968515', whatsapp: '3968515', address: 'شارع الدعبول', isOpen: true },
   { id: 'comm_saad', name: 'محمصة سعد الحاج موسى', category: Category.COMMERCIAL_STORES, phone: '+96170241288', whatsapp: '70241288', address: 'مقابل مكتب الاونروا', isOpen: true },
   { id: 'comm_ahmad_saati', name: 'احمد الحاج موسى السعاتي', category: Category.COMMERCIAL_STORES, phone: '+96170468553', whatsapp: '70468553', address: 'مخيم الرشيدية', isOpen: true },
@@ -290,7 +334,6 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'phone11', name: 'أحمد الفاعور تعبئة دولارات', category: Category.PHONE_SERVICES, phone: '+96178873526', whatsapp: '78873526', address: 'مخيم الرشيدية', isOpen: true },
 
   // --- ممرض خاص ---
-  { id: 'nurse1', name: 'الممرض الحاج زياد أسعد', category: Category.NURSE, phone: '+96170696190', whatsapp: '70696190', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
   { id: 'nurse2', name: 'الممرض الحاج الصيدلي أشرف السيد', category: Category.NURSE, phone: '+9613244632', whatsapp: '3244632', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'nurse3', name: 'الممرض الحاج يحيى القط', category: Category.NURSE, phone: '+96181612822', whatsapp: '81612822', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'nurse4', name: 'الممرض سعيد زيدان', category: Category.NURSE, phone: '+9613574502', whatsapp: '3574502', address: 'مخيم الرشيدية', isOpen: true },
@@ -320,9 +363,8 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'lab3', name: 'فني مخبري علي برناوي', category: Category.NURSE, phone: '+96170776812', whatsapp: '70776812', address: 'مخيم الرشيدية', isOpen: true },
 
   // --- مستشفيات صور وصيدا ---
-  { id: 'hosp_balsam', name: 'مستشفى بلسم / مخيم الرشيدية', category: Category.HOSPITALS, phone: '+9613625229', whatsapp: '3625229', address: 'مخيم الرشيدية (رقم إضافي: 81992156)', isOpen: true, isPinned: true },
   { id: 'hosp_italy', name: 'مستشفى اللبناني الايطالي', category: Category.HOSPITALS, phone: '+9617344423', whatsapp: '7344423', address: 'صور (رقم إضافي: 07350065)', isOpen: true },
-  { id: 'hosp_jabal', name: 'مستشفى jبل عامل', category: Category.HOSPITALS, phone: '+9617740348', whatsapp: '7740348', address: 'صور (أرقام إضافية: 03280580 - 07740343)', isOpen: true },
+  { id: 'hosp_jabal', name: 'مستشفى جبل عامل', category: Category.HOSPITALS, phone: '+9617740348', whatsapp: '7740348', address: 'صور (أرقام إضافية: 03280580 - 07740343)', isOpen: true },
   { id: 'hosp_hiram', name: 'مستشفى حيرام', category: Category.HOSPITALS, phone: '+9617343700', whatsapp: '7343700', address: 'صور (رقم إضافي: 03218906)', isOpen: true },
   { id: 'hosp_faqih', name: 'مستشفى الفقيه السكسكية', category: Category.HOSPITALS, phone: '+9617443470', whatsapp: '7443470', address: 'السكسكية', isOpen: true },
   { id: 'hosp_kharoubi', name: 'مستشفى خروبي الصرفند', category: Category.HOSPITALS, phone: '+9617443344', whatsapp: '7443344', address: 'الصرفند', isOpen: true },
@@ -330,7 +372,7 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'hosp_osairan', name: 'مستشفى عسيران / صيدا', category: Category.HOSPITALS, phone: '+9617726008', whatsapp: '7726008', address: 'صيدا', isOpen: true },
   { id: 'hosp_labib', name: 'مستشفى لبيب / صيدا', category: Category.HOSPITALS, phone: '+9617723444', whatsapp: '7723444', address: 'صيدا (رقم إضافي: 03112010)', isOpen: true },
   { id: 'hosp_hammoud', name: 'مستشفى حمود / صيدا', category: Category.HOSPITALS, phone: '+9617721021', whatsapp: '7721021', address: 'صيدا (رقم إضافي: 07723111)', isOpen: true },
-  { id: 'hosp_dalaa', name: 'مستشفى dلاعة / صيدا', category: Category.HOSPITALS, phone: '+9617724088', whatsapp: '7724088', address: 'صيدا', isOpen: true },
+  { id: 'hosp_dalaa', name: 'مستشفى دلاعة / صيدا', category: Category.HOSPITALS, phone: '+9617724088', whatsapp: '7724088', address: 'صيدا', isOpen: true },
   { id: 'hosp_hamshari', name: 'مستشفى الشهيد محمود الهمشري / صيدا', category: Category.HOSPITALS, phone: '+9617724881', whatsapp: '7724881', address: 'صيدا', isOpen: true },
   { id: 'hosp_qassab', name: 'مستشفى قصب / عبرا', category: Category.HOSPITALS, phone: '+961723900', whatsapp: '723900', address: 'عبرا (رقم إضافي: 07731541)', isOpen: true },
   { id: 'hosp_turkish', name: 'المستشفى التركي / صيدا', category: Category.HOSPITALS, phone: '+9617577560', whatsapp: '7577560', address: 'صيدا (رقم إضافي: 76060537)', isOpen: true },
@@ -371,6 +413,7 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'coffee_hisham', name: 'قهوة ابو هشام العريض', category: Category.COFFEE_HOOKAH, phone: '+447838238234', whatsapp: '447838238234', address: 'مخيم الرشيدية اخر شارع الصفوري', isOpen: true },
   { id: 'coffee_omar', name: 'قهوة عمر محمد ديب', category: Category.COFFEE_HOOKAH, phone: '+96170698054', whatsapp: '70698054', address: 'حارة ستيتي مقابل منزل الاستاذ المرحوم عبدالرؤوف', isOpen: true },
   { id: 'coffee_abbas', name: 'اركيلة عباس', category: Category.COFFEE_HOOKAH, phone: '+96176382585', whatsapp: '76382585', address: 'الرشيدية حارة الملعب', isOpen: true },
+  { id: 'coffee_ali_hamza', name: 'اراكيل علي حمزة', category: Category.COFFEE_HOOKAH, phone: '+96181568220', whatsapp: '81568220', address: 'خلف مستشفى بلسم', isOpen: true },
 
   // --- ألمنيوم ---
   { id: 'alum_shadi', name: 'المعلم شادي حكم شحرور', category: Category.ALUMINUM, phone: '+96171642883', whatsapp: '71642883', address: 'مخيم الرشيدية', isOpen: true },
@@ -378,7 +421,7 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'alum_mahmoud', name: 'المعلم محمود العريض', category: Category.ALUMINUM, phone: '+96178862269', whatsapp: '78862269', address: 'مخيم الرشيدية - خط السكة محلات ابو النمل', isOpen: true },
   { id: 'alum_hussein', name: 'المعلم حسين الحامد', category: Category.ALUMINUM, phone: '+9613285864', whatsapp: '3285864', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'alum_ghassan', name: 'المعلم غسان الترك', category: Category.ALUMINUM, phone: '+96178907747', whatsapp: '78907747', address: 'مخيم الرشيدية', isOpen: true },
-  { id: 'alum_jaber', name: 'المعلم jaber', category: Category.ALUMINUM, phone: '+9613050174', whatsapp: '3050174', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'alum_jaber', name: 'المعلم جابر', category: Category.ALUMINUM, phone: '+9613050174', whatsapp: '3050174', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'alum_mohamad_ahmad', name: 'المعلم محمد محمود الاحمد', category: Category.ALUMINUM, phone: '+96170707139', whatsapp: '70707139', address: 'مخيم الرشيدية', isOpen: true },
 
   // --- مغاسل ---
@@ -469,10 +512,6 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'res_sweets_abd', name: 'حلويات عبد أشعب', category: Category.RESTAURANT, phone: '+96176653025', whatsapp: '76653025', address: 'مخيم الرشيدية', isOpen: true },
 
   // --- دليفري ---
-  { id: 'del_ibrahim', name: 'دليفري ابراهيم زمزم', category: Category.DELIVERY, phone: '+96176951402', whatsapp: '76951402', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
-  { id: 'del_mahmoud', name: 'دليفري محمود قاسم', category: Category.DELIVERY, phone: '+96176117281', whatsapp: '76117281', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
-  { id: 'del_omar', name: 'دليفري عمر هشوم', category: Category.DELIVERY, phone: '+96181821900', whatsapp: '81821900', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
-  { id: 'del_azzam', name: 'دليفري العزام', category: Category.DELIVERY, phone: '+96171727781', whatsapp: '71727781', address: 'مخيم الرشيدية', isOpen: true, isPinned: true },
   { id: 'del_hamdouni', name: 'ابو علي الحمدوني', category: Category.DELIVERY, phone: '+96171839132', whatsapp: '71839132', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'del_abd_hussein', name: 'عبدالله الحسين', category: Category.DELIVERY, phone: '+96181293996', whatsapp: '81293996', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'del_hisham', name: 'دليفري هشام الزيني', category: Category.DELIVERY, phone: '+96176950285', whatsapp: '76950285', address: 'مخيم الرشيدية', isOpen: true },
@@ -530,7 +569,7 @@ export const INITIAL_BUSINESSES: Business[] = [
   { id: 'tax21', name: 'الشيحا لنقل الطلاب', category: Category.TAXI_TRANSPORT, phone: '+96171581664', whatsapp: '71581664', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'tax22', name: 'محمد ابو خالد الشيحا لنقل الطلاب', category: Category.TAXI_TRANSPORT, phone: '+96170718643', whatsapp: '70718643', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'tax23', name: 'يوسف خليفة لنقل الطلاب', category: Category.TAXI_TRANSPORT, phone: '+9613531230', whatsapp: '3531230', address: 'مخيم الرشيدية', isOpen: true },
-  { id: 'tax24', name: 'بسام الفالح ( فإن )', category: Category.TAXI_TRANSPORT, phone: '+9613072208', whatsapp: '3072208', address: 'مخيم الرشيدية', isOpen: true },
+  { id: 'tax24', name: 'بسام الفالف ( فإن )', category: Category.TAXI_TRANSPORT, phone: '+9613072208', whatsapp: '3072208', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'tax25', name: 'نقليات هادي عباس (بيكاب)', category: Category.TAXI_TRANSPORT, phone: '+96170359011', whatsapp: '70359011', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'tax26', name: 'نقليات الحاج لبيب عليان (بيكاب)', category: Category.TAXI_TRANSPORT, phone: '+96170641596', whatsapp: '70641596', address: 'مخيم الرشيدية', isOpen: true },
   { id: 'tax27', name: 'نقليات الحاج نهاد فندي (بيكاب)', category: Category.TAXI_TRANSPORT, phone: '+9613507785', whatsapp: '3507785', address: 'مخيم الرشيدية', isOpen: true },
@@ -555,6 +594,7 @@ export const INITIAL_BUSINESSES: Business[] = [
 
 export const CATEGORIES_LIST = [
   Category.ONLINE_SHEIN,
+  Category.CUPPING,
   Category.BAKERY,
   Category.ALUMINUM,
   Category.INTERNET,

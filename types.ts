@@ -37,7 +37,8 @@ export enum Category {
   ENGINEERING = 'هندسة مدنية',
   CURRENCY_EXCHANGE = 'صراف عملات اجنبية',
   TAXI_TRANSPORT = 'تاكسي نقليات عفش',
-  ONLINE_SHEIN = 'اون لاين / شي إن'
+  ONLINE_SHEIN = 'اون لاين / شي إن',
+  CUPPING = 'علاج بالحجامة'
 }
 
 export interface Business {

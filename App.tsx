@@ -55,7 +55,8 @@ import {
   Bus,
   Instagram,
   Globe,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Activity
 } from 'lucide-react';
 import { Category, Business, ChatMessage, Advertisement } from './types';
 import { INITIAL_BUSINESSES, CATEGORIES_LIST, ADS_DATA } from './constants';
@@ -100,6 +101,7 @@ const CategoryIcon = ({ category, className = "w-5 h-5" }: { category: Category,
     case Category.CURRENCY_EXCHANGE: return <Banknote className={className} />;
     case Category.TAXI_TRANSPORT: return <Car className={className} />;
     case Category.ONLINE_SHEIN: return <Globe className={className} />;
+    case Category.CUPPING: return <Activity className={className} />;
     default: return <LayoutGrid className={className} />;
   }
 };
@@ -168,8 +170,8 @@ const App: React.FC = () => {
     const now = new Date().getTime();
 
     return ADS_DATA.map(ad => {
-      // استثناء الإعلان رقم 2
-      if (ad.id === 2) return ad;
+      // استثناء الإعلان رقم 1 و 2
+      if (ad.id === 1 || ad.id === 2) return ad;
 
       // التحقق من انتهاء الصلاحية إذا كان هناك تاريخ بدء
       if (ad.startDate) {
@@ -268,11 +270,9 @@ const App: React.FC = () => {
             )}
             
             <div className="relative flex items-center">
-              {/* Smart Assistant Cloud Prompt - Repositioned and Shortened with new text */}
               {showChatCloud && !isChatOpen && (
                 <div className="absolute top-1/2 -translate-y-1/2 left-[calc(100%+12px)] bg-white text-slate-900 px-3 py-1.5 rounded-xl text-[10px] font-black shadow-[0_8px_25px_rgba(255,255,255,0.15)] whitespace-nowrap z-50 animate-pulse border border-slate-200">
                   محتاج مساعدة؟ احكيني
-                  {/* Arrow Pointing Left (towards the bot icon) */}
                   <div className="absolute top-1/2 -translate-y-1/2 -left-1 w-2.5 h-2.5 bg-white rotate-45 border-l border-b border-slate-200"></div>
                 </div>
               )}
@@ -331,7 +331,7 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Custom Static Banner (Design Services Image) */}
+        {/* Custom Static Banner */}
         <div className="mb-4 w-full rounded-[2.5rem] overflow-hidden relative shadow-2xl group transition-transform active:scale-[0.98]">
            <a href="https://wa.me/966531354751" target="_blank" rel="noopener noreferrer">
               <img 
@@ -343,7 +343,7 @@ const App: React.FC = () => {
            </a>
         </div>
 
-        {/* Moving Thank You Marquee - Faster & Looping */}
+        {/* Moving Thank You Marquee */}
         <div className="mb-2 bg-indigo-500/5 border-y border-indigo-500/10 py-2.5 relative overflow-hidden rounded-2xl shadow-sm">
            <div className="marquee-container">
              <div className="animate-marquee-fast flex items-center gap-20 text-[11px] font-black text-slate-300">
@@ -365,7 +365,7 @@ const App: React.FC = () => {
            </div>
         </div>
 
-        {/* Thin Religious News Ticker Bar - Looping */}
+        {/* Religious Ticker */}
         <div className="mb-8 bg-[#0f172a]/40 border-b border-slate-800/80 py-2 relative overflow-hidden rounded-b-2xl shadow-sm">
           <div className="marquee-container">
             <div className="animate-marquee flex items-center gap-16 text-[12px] font-black text-indigo-100">
@@ -385,13 +385,12 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Updated Buy & Sell WhatsApp Group Section - Two Boxes */}
+        {/* WhatsApp Group Section - Preserved with both boxes */}
         <div className="mb-6 px-0.5 grid grid-cols-1 md:grid-cols-2 gap-4">
            {/* Group 1: Huda Deeb */}
            <a href="https://chat.whatsapp.com/EMRZxPMYNZR061GAdKCBRv?mode=gi_c" target="_blank" rel="noopener noreferrer" 
               className="block w-full rounded-[2.5rem] overflow-hidden relative shadow-xl hover:scale-[1.01] transition-all group active:scale-95 border border-emerald-500/20 h-full">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-500 opacity-95"></div>
-              <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
               <div className="relative z-10 p-6 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <div className="bg-white/20 p-2.5 rounded-2xl backdrop-blur-md border border-white/10 shrink-0">
@@ -412,7 +411,6 @@ const App: React.FC = () => {
            <a href="https://chat.whatsapp.com/LLLRuHiw44e2L5qg11jfAl?mode=gi_t" target="_blank" rel="noopener noreferrer" 
               className="block w-full rounded-[2.5rem] overflow-hidden relative shadow-xl hover:scale-[1.01] transition-all group active:scale-95 border border-blue-500/20 h-full">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-teal-500 opacity-95"></div>
-              <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
               <div className="relative z-10 p-6 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <div className="bg-white/20 p-2.5 rounded-2xl backdrop-blur-md border border-white/10 shrink-0">
@@ -430,7 +428,7 @@ const App: React.FC = () => {
            </a>
         </div>
 
-        {/* 10 Numbered Ads Horizontal Scroller with Expiration Logic */}
+        {/* Ads Scroller - Image #1 preserved */}
         <div className="mb-10">
           <div className="flex overflow-x-auto gap-4 pb-4 px-0.5 scrollbar-hide snap-x snap-mandatory">
             {processedAds.map((ad) => (
@@ -441,14 +439,12 @@ const App: React.FC = () => {
                 rel="noopener noreferrer"
                 className="flex-shrink-0 w-[85%] sm:w-[350px] snap-center rounded-[2.5rem] overflow-hidden relative shadow-lg active:scale-95 transition-all border border-slate-800 h-[220px] flex items-center"
               >
-                {/* Image Background */}
                 {ad.imageUrl ? (
                   <img src={ad.imageUrl} alt={ad.title} className="absolute inset-0 w-full h-full object-cover" />
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-[#0f172a] opacity-95"></div>
                 )}
                 
-                {/* Conditional Overlay and Text: Only show text if NO image is present */}
                 {!ad.imageUrl ? (
                   <>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0"></div>
@@ -459,30 +455,21 @@ const App: React.FC = () => {
                         </div>
                         <span className="text-[12px] font-black text-indigo-300 uppercase tracking-widest drop-shadow-md">مساحة إعلانية</span>
                       </div>
-                      
                       <div className="space-y-2">
                         <h4 className="text-[18px] font-black text-white leading-snug drop-shadow-lg">{ad.title}</h4>
-                        <p className="text-[11px] text-slate-100 font-bold leading-relaxed opacity-90 drop-shadow-md">
-                          {ad.description}
-                        </p>
+                        <p className="text-[11px] text-slate-100 font-bold leading-relaxed opacity-90 drop-shadow-md">{ad.description}</p>
                       </div>
-                      
                       <div className="mt-2 flex items-center gap-2 text-indigo-300 font-black text-[12px] drop-shadow-md">
                         <WhatsAppIcon className="w-4 h-4" /> اضغط هنا للتواصل
                       </div>
                     </div>
                   </>
                 ) : null}
-                
-                {/* Number Badge - Always keep for slot identification, but make it clean */}
                 <div className="absolute top-4 left-4 bg-black/40 backdrop-blur-md text-white w-8 h-8 rounded-full flex items-center justify-center font-black text-[14px] shadow-lg border border-white/20 z-20">
                   {ad.id}
                 </div>
               </a>
             ))}
-          </div>
-          <div className="flex justify-center gap-1.5 mt-2 opacity-30">
-             {[1,2,3,4,5].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-slate-500"></div>)}
           </div>
         </div>
 
@@ -506,7 +493,6 @@ const App: React.FC = () => {
                   <Heart className={`w-6 h-6 transition-all ${favorites.includes(biz.id) ? 'fill-rose-500 text-rose-500' : 'text-slate-700'}`} />
                 </button>
               </div>
-              
               <div className="flex flex-wrap gap-3">
                 <a href={`tel:${biz.phone}`} className="flex-1 min-w-[120px] bg-[#5346e0] hover:bg-[#4338ca] text-white py-5 rounded-[1.5rem] text-[15px] font-black flex items-center justify-center gap-2.5 transition-all active:scale-95 shadow-xl shadow-indigo-600/10">
                   <Phone className="w-6 h-6" strokeWidth={3} /> اتصال
@@ -538,23 +524,13 @@ const App: React.FC = () => {
         {totalPages > 1 && (
           <div className="mt-8 mb-20 flex flex-col items-center gap-6">
              <div className="flex items-center justify-between gap-4 w-full max-w-sm">
-                <button 
-                  disabled={currentPage === 1} 
-                  onClick={() => handlePageChange(currentPage - 1)} 
-                  className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-400 py-5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 disabled:opacity-20 active:scale-95 transition-all shadow-md"
-                >
+                <button disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-400 py-5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 disabled:opacity-20 active:scale-95 transition-all shadow-md">
                   <ChevronRight className="w-5 h-5" /> السابق
                 </button>
-                
                 <div className="text-sm font-black text-slate-400 bg-slate-900 border border-slate-800 px-8 py-5 rounded-2xl shadow-inner text-center min-w-[100px]">
                    {currentPage} من {totalPages}
                 </div>
-                
-                <button 
-                  disabled={currentPage === totalPages} 
-                  onClick={() => handlePageChange(currentPage + 1)} 
-                  className="flex-1 bg-[#5346e0] hover:bg-[#4338ca] text-white py-5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-indigo-600/20 disabled:opacity-20 active:scale-95 transition-all"
-                >
+                <button disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)} className="flex-1 bg-[#5346e0] hover:bg-[#4338ca] text-white py-5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-indigo-600/20 disabled:opacity-20 active:scale-95 transition-all">
                   التالي <ChevronLeft className="w-5 h-5" />
                 </button>
              </div>
@@ -575,13 +551,13 @@ const App: React.FC = () => {
               <div className="bg-[#5346e0]/10 p-2 rounded-xl">
                 <Bot className="w-6 h-6" />
               </div>
-              <span className="font-black text-[17px] text-white">المساعد الذكي</span>
+              <span className="font-black text-[17px] text-white">المساعد الذكي (سريع)</span>
             </div>
             <button onClick={() => setIsChatOpen(false)} className="p-3 hover:bg-slate-800 rounded-full transition-colors"><X className="w-6 h-6 text-slate-400" /></button>
           </div>
           <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-[#020617] to-[#0f172a]">
              <div className="bg-[#1e293b]/50 border border-slate-800 p-6 rounded-[2.2rem] rounded-tr-none text-[13px] font-bold text-slate-300 leading-relaxed shadow-sm">
-                يا هلا بيك! أنا مساعدك الذكي في مخيم الرشيدية. اسألني عن أي خدمة بدك إياها بالمخيم وأنا بدلك فوراً على الأرقام الموجودة عنا. كيف بقدر أخدمك اليوم؟
+                يا هلا بيك! أنا رشيد، مساعدك السريع جداً في المخيم. كيف بقدر أخدمك اليوم؟
              </div>
              {chatMessages.map((m, i) => (
                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -592,14 +568,14 @@ const App: React.FC = () => {
              ))}
              {isTyping && (
                <div className="flex items-center gap-2 text-[#5346e0] text-[11px] font-black animate-pulse px-2">
-                 <Bot className="w-4 h-4" /> جاري البحث عن طلبك...
+                 <Bot className="w-4 h-4" /> جاري الرد فوراً...
                </div>
              )}
              <div ref={chatEndRef} />
           </div>
-          <div className="p-6 bg-[#0f172a] border-t border-slate-800 flex gap-3 shadow-[0_-10px_20px_rgba(0,0,0,0.3)]">
+          <div className="p-6 bg-[#0f172a] border-t border-slate-800 flex gap-3">
             <input 
-              className="flex-1 bg-slate-800/80 px-5 py-4.5 rounded-2xl text-[13px] font-bold outline-none text-white focus:ring-2 ring-[#5346e0]/40 border border-slate-700 transition-all placeholder:text-slate-500"
+              className="flex-1 bg-slate-800/80 px-5 py-4.5 rounded-2xl text-[13px] font-bold outline-none text-white border border-slate-700"
               placeholder="اكتب طلبك هنا..." value={userInput} onChange={e => setUserInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSendMessage()}
             />

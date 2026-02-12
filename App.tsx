@@ -44,6 +44,17 @@ import {
   Radio,
   Scissors,
   Wrench,
+  Camera,
+  Fuel,
+  Car,
+  Carrot,
+  Monitor,
+  HardHat,
+  Compass,
+  Banknote,
+  Bus,
+  Instagram,
+  Globe,
   Image as ImageIcon
 } from 'lucide-react';
 import { Category, Business, ChatMessage, Advertisement } from './types';
@@ -77,6 +88,18 @@ const CategoryIcon = ({ category, className = "w-5 h-5" }: { category: Category,
     case Category.INSTITUTION: return <Building2 className={className} />;
     case Category.BARBER_BEAUTY: return <Scissors className={className} />;
     case Category.PLUMBING_TILING: return <Wrench className={className} />;
+    case Category.EVENT_PHOTOGRAPHY: return <Camera className={className} />;
+    case Category.UPHOLSTERY_CURTAINS: return <Scissors className={className} />;
+    case Category.FORGING: return <Hammer className={className} />;
+    case Category.GAS_STATIONS: return <Fuel className={className} />;
+    case Category.CAR_MECHANICS: return <Car className={className} />;
+    case Category.VEGETABLES: return <Carrot className={className} />;
+    case Category.ELECTRONICS: return <Monitor className={className} />;
+    case Category.CONSTRUCTION: return <HardHat className={className} />;
+    case Category.ENGINEERING: return <Compass className={className} />;
+    case Category.CURRENCY_EXCHANGE: return <Banknote className={className} />;
+    case Category.TAXI_TRANSPORT: return <Car className={className} />;
+    case Category.ONLINE_SHEIN: return <Globe className={className} />;
     default: return <LayoutGrid className={className} />;
   }
 };
@@ -102,7 +125,6 @@ const App: React.FC = () => {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [userInput, setUserInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [visitCount, setVisitCount] = useState<number>(0);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showChatCloud, setShowChatCloud] = useState(true);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -164,22 +186,6 @@ const App: React.FC = () => {
       }
       return ad;
     });
-  }, []);
-
-  useEffect(() => {
-    const updateVisitCount = async () => {
-      try {
-        const response = await fetch('https://api.countapi.xyz/hit/rashidiya-guide-ibtesam-v1/visits');
-        const data = await response.json();
-        setVisitCount(data.value || 1978);
-      } catch (error) {
-        const localViews = localStorage.getItem('fallback_views') || "1978";
-        const newViews = parseInt(localViews) + 1;
-        localStorage.setItem('fallback_views', newViews.toString());
-        setVisitCount(newViews);
-      }
-    };
-    updateVisitCount();
   }, []);
 
   useEffect(() => {
@@ -379,24 +385,46 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Buy & Sell WhatsApp Group Banner */}
-        <div className="mb-6 px-0.5">
+        {/* Updated Buy & Sell WhatsApp Group Section - Two Boxes */}
+        <div className="mb-6 px-0.5 grid grid-cols-1 md:grid-cols-2 gap-4">
+           {/* Group 1: Huda Deeb */}
            <a href="https://chat.whatsapp.com/EMRZxPMYNZR061GAdKCBRv?mode=gi_c" target="_blank" rel="noopener noreferrer" 
-              className="block w-full rounded-[2.5rem] overflow-hidden relative shadow-xl hover:scale-[1.01] transition-all group active:scale-95 border border-emerald-500/20">
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-green-500 to-teal-600 opacity-95"></div>
+              className="block w-full rounded-[2.5rem] overflow-hidden relative shadow-xl hover:scale-[1.01] transition-all group active:scale-95 border border-emerald-500/20 h-full">
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-500 opacity-95"></div>
               <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
-              <div className="relative z-10 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-4 text-center sm:text-right">
-                  <div className="bg-white/20 p-3.5 rounded-3xl backdrop-blur-md shadow-inner border border-white/10 shrink-0">
-                    <ShoppingBag className="w-8 h-8 text-white" />
+              <div className="relative z-10 p-6 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="bg-white/20 p-2.5 rounded-2xl backdrop-blur-md border border-white/10 shrink-0">
+                    <ShoppingBag className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-white leading-tight mb-1">جروب بيع وشراء</h3>
-                    <p className="text-emerald-50 text-[11px] font-bold opacity-90 leading-relaxed">داخل مخيم الرشيدية وخارجه.. انضم لعائلتنا التجارية الآن</p>
+                    <h3 className="text-[13px] font-black text-white leading-tight">جروب هدى ديب</h3>
+                    <p className="text-emerald-50 text-[10px] font-bold opacity-80">للتجارة والبيع والشراء</p>
                   </div>
                 </div>
-                <div className="bg-white text-emerald-700 px-8 py-3.5 rounded-2xl font-black text-[14px] shadow-lg group-hover:bg-green-50 transition-all flex items-center gap-2 shrink-0 active:scale-90">
-                  <UserPlus className="w-4 h-4" /> انضم الآن
+                <div className="bg-white text-emerald-700 px-5 py-2.5 rounded-xl font-black text-[12px] shadow-lg group-hover:bg-green-50 transition-all flex items-center gap-2 shrink-0">
+                  انضم الآن
+                </div>
+              </div>
+           </a>
+
+           {/* Group 2: Zeyad Asaad */}
+           <a href="https://chat.whatsapp.com/LLLRuHiw44e2L5qg11jfAl?mode=gi_t" target="_blank" rel="noopener noreferrer" 
+              className="block w-full rounded-[2.5rem] overflow-hidden relative shadow-xl hover:scale-[1.01] transition-all group active:scale-95 border border-blue-500/20 h-full">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-teal-500 opacity-95"></div>
+              <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
+              <div className="relative z-10 p-6 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="bg-white/20 p-2.5 rounded-2xl backdrop-blur-md border border-white/10 shrink-0">
+                    <UserPlus className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-[13px] font-black text-white leading-tight">جروب الحج زياد اسعد</h3>
+                    <p className="text-blue-50 text-[10px] font-bold opacity-80">للتجارة وخدمات المخيم</p>
+                  </div>
+                </div>
+                <div className="bg-white text-blue-700 px-5 py-2.5 rounded-xl font-black text-[12px] shadow-lg group-hover:bg-blue-50 transition-all flex items-center gap-2 shrink-0">
+                  انضم الآن
                 </div>
               </div>
            </a>
@@ -491,6 +519,11 @@ const App: React.FC = () => {
                 <a href={`https://wa.me/${biz.whatsapp?.replace(/\D/g, '')}`} target="_blank" className="flex-[1.5] min-w-[140px] bg-green-600/10 text-green-500 border border-green-600/20 hover:bg-green-600/20 py-5 rounded-[1.5rem] text-[15px] font-black flex items-center justify-center gap-2.5 transition-all active:scale-95">
                   <WhatsAppIcon className="w-6 h-6" /> واتساب
                 </a>
+                {biz.instagram && (
+                  <a href={biz.instagram} target="_blank" className="flex-1 min-w-[120px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white py-5 rounded-[1.5rem] text-[15px] font-black flex items-center justify-center gap-2.5 transition-all active:scale-95 shadow-lg">
+                    <Instagram className="w-6 h-6" /> إنستقرام
+                  </a>
+                )}
                 {biz.whatsappChannel && (
                   <a href={biz.whatsappChannel} target="_blank" className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-5.5 rounded-[1.5rem] text-[15px] font-black flex items-center justify-center gap-3 transition-all active:scale-95 shadow-xl shadow-emerald-500/20 mt-1">
                     <Radio className="w-6 h-6" strokeWidth={3} /> انضم لقناتي على الواتساب
@@ -531,10 +564,6 @@ const App: React.FC = () => {
 
       <footer className="py-12 text-center px-6 bg-[#020617] relative z-10 border-t border-slate-900/50">
         <p className="text-slate-300 text-[14px] font-black mb-6 leading-relaxed max-w-xs mx-auto opacity-90">صمم هذا التطبيق لمساعدة اهل المخيم بواسطة ابتسام احمد ديب</p>
-        <div className="flex items-center justify-center gap-2 text-[#5346e0] font-black text-[12px] mb-8 bg-[#5346e0]/5 w-fit mx-auto px-6 py-3.5 rounded-full border border-indigo-400/10 shadow-sm transition-all hover:bg-[#5346e0]/10">
-          <Eye className="w-4 h-4" /> 
-          عدد المشاهدات: {visitCount > 0 ? visitCount.toLocaleString() : 'جاري التحميل...'}
-        </div>
         <p className="text-slate-600 text-[10px] font-bold tracking-[0.2em] uppercase opacity-60">جميع الحقوق محفوظة لابتسام ديب © 2026</p>
       </footer>
 
@@ -563,7 +592,7 @@ const App: React.FC = () => {
              ))}
              {isTyping && (
                <div className="flex items-center gap-2 text-[#5346e0] text-[11px] font-black animate-pulse px-2">
-                 <Sparkles className="w-4 h-4" /> جاري البحث عن طلبك...
+                 <Bot className="w-4 h-4" /> جاري البحث عن طلبك...
                </div>
              )}
              <div ref={chatEndRef} />

@@ -5,7 +5,7 @@ export enum Category {
   DELIVERY = 'دليفري',
   AGRICULTURE = 'زراعة وبستنة',
   BARBER_BEAUTY = 'صالون حلاقة وتجميل',
-  PLUMBING_TILING = 'صحية وبلاط',
+  PLUMBING_TILING = 'صحية وبلاط ودهان',
   PHARMACY = 'صيدليات',
   DENTIST = 'عيادات أسنان',
   POULTRY = 'فراريج',
@@ -25,7 +25,19 @@ export enum Category {
   BUTCHER = 'ملاحم',
   NURSE = 'ممرض خاص',
   INSTITUTION = 'مؤسسات',
-  CARPENTER = 'نجار'
+  CARPENTER = 'نجار',
+  EVENT_PHOTOGRAPHY = 'تصوير مناسبات',
+  UPHOLSTERY_CURTAINS = 'تنجيد كنبيات وتركيب برادي داخلي وخارجي',
+  FORGING = 'حدادة افرنجية',
+  GAS_STATIONS = 'محطات وقود',
+  CAR_MECHANICS = 'ميكانيك وكهرباء سيارات',
+  VEGETABLES = 'محلات خضار',
+  ELECTRONICS = 'الكترونيات',
+  CONSTRUCTION = 'معلمين وورقة وعمار',
+  ENGINEERING = 'هندسة مدنية',
+  CURRENCY_EXCHANGE = 'صراف عملات اجنبية',
+  TAXI_TRANSPORT = 'تاكسي نقليات عفش',
+  ONLINE_SHEIN = 'اون لاين / شي إن'
 }
 
 export interface Business {
@@ -36,6 +48,7 @@ export interface Business {
   whatsapp?: string;
   whatsappChannel?: string;
   tiktok?: string;
+  instagram?: string;
   address: string;
   mapUrl?: string;
   isOpen: boolean;

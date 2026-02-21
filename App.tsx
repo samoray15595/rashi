@@ -408,7 +408,7 @@ const App: React.FC = () => {
            </a>
 
            {/* Group 2: Zeyad Asaad */}
-           <a href="https://chat.whatsapp.com/LLLRuHiw44e2L5qg11jfAl?mode=gi_t" target="_blank" rel="noopener noreferrer" 
+           <a href="https://chat.whatsapp.com/BzgtNXfEqAmB59tk9o70Vs?mode=hqctcla" target="_blank" rel="noopener noreferrer" 
               className="block w-full rounded-[2.5rem] overflow-hidden relative shadow-xl hover:scale-[1.01] transition-all group active:scale-95 border border-blue-500/20 h-full">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-teal-500 opacity-95"></div>
               <div className="relative z-10 p-6 flex items-center justify-between gap-4">
